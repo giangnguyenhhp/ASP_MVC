@@ -1,0 +1,20 @@
+﻿@model ProductModel
+
+@{
+    ViewBag.Title = "View Product";
+    Layout = "_Layout";
+}
+<div class="card bg-primary text-white">
+    <div class="card-header">
+        <h1 >Product Information</h1>
+    </div>
+    <div class="card-body">
+        <h2 class="card-text">
+            <ol>
+                <li>ID : @Model.Id</li>
+                <li>Name : @Model.Name</li>
+                <li>Price : @Model.Price</li>
+            </ol>
+        </h2>
+    </div >
+</div>

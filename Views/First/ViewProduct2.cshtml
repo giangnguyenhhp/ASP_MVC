@@ -1,0 +1,22 @@
+﻿@model ProductModel
+
+@{
+    ViewBag.Title = ViewData["Title"] ?? "View Product";
+    Layout = "_Layout";
+    var product = ViewData["product"] as ProductModel;
+}
+<p>@ViewData["Title"]</p>
+<div class="card bg-warning text-white">
+    <div class="card-header">
+        <h1>Product Information</h1>
+    </div>
+    <div class="card-body">
+        <h2 class="card-text">
+            <ol>
+                <li>ID : @product.Id</li>
+                <li>Name : @product.Name</li>
+                <li>Price : @product.Price</li>
+            </ol>
+        </h2>
+    </div >
+</div>

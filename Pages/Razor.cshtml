@@ -1,0 +1,28 @@
+﻿@page
+@model ASP_MVC.Page.Razor
+
+@{
+    Layout = "_Layout";
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <title>Razor Page</title>
+</head>
+<body>
+<div class="card">
+    <h1 class="card-header">Giới thiệu về Razor Page</h1>
+    <div class="card-body">
+        <p class="card-text">
+            Razor là một template engine trong .NET,nó là TEMPLATE ENGINE mặc định của ASP.NET MVC,
+            có chức năng render ( dựng ) HTML từ các view (.cshtml).
+            View (.cshtml) cho phép viết HTML và nhúng code C#.
+        </p>
+        <hr/>
+        @Path
+    </div>
+</div>
+</body>
+</html>
