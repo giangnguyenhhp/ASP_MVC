@@ -1,0 +1,17 @@
+﻿@model dynamic
+@inject ASP_MVC.Services.PlanetService PlanetService
+
+@{
+    ViewBag.Title = "Planet Information";
+}
+
+<h1>Các hành tinh trong hệ mặt trời</h1>
+<div class="list-group">
+    @foreach (var planet in PlanetService)
+    {
+        <a class="list-group-item-action list-group-item " asp-action="@planet.Name">
+            @planet.VnName - @planet.Name
+        </a>
+    }
+</div>
+

@@ -1,0 +1,18 @@
+﻿@using ASP_MVC.Areas
+@model List<ProductModel>
+
+@{
+    ViewBag.Title = "Product Information";
+}
+
+<h1>Danh sách các sản phẩm</h1>
+<ul>
+    @foreach (var product in Model)
+    {
+        <li>
+            @product.Name
+        </li>
+    }
+</ul>
+
+<a asp-action=""></a>

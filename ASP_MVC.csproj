@@ -7,7 +7,14 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Folder Include="Areas\ProductManage\Data" />
+      <Folder Include="Areas\ProductManage\Models" />
       <Folder Include="Pages\Shared" />
+      <Folder Include="wwwroot\Planet" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="7.0.0" />
     </ItemGroup>
 
 </Project>

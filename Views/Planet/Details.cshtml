@@ -1,0 +1,18 @@
+﻿@model ASP_MVC.Models.PlanetModel?
+
+@{
+    ViewBag.Title = @Model?.Name;
+}
+
+<h1>@Model.Name</h1>
+<div class="card w-50">
+    <img class="card-img-top card-img-bottom" src="/Planet/@(Model.Name).jpg" alt=""/>
+    <div class="card-body">
+        <h5>@Model.VnName</h5>
+        <div class="card-text">
+            @Model.Content
+        </div>
+        <hr/>
+        <a class="card-link" asp-action="Index">Các Hành Tinh</a>
+    </div>
+</div>

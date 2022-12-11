@@ -130,6 +130,7 @@ public class FirstController : Controller
     [TempData]
     public string StatusMessage { get; set; }
 
+    [AcceptVerbs("POST","GET")] // Chỉ có thể truy cập bằng phương thức POST,GET
     public IActionResult ViewProduct(int id)
     {
         var product = _productService.FirstOrDefault(x=>x.Id == id);

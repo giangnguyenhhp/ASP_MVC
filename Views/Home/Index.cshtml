@@ -7,3 +7,54 @@
     <h1 class="display-4">Xin Chào</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+<p>Cách sử dụng anchor tag helper </p>
+<ul>
+    <li>asp-are="AreaName"</li>
+    <li>asp-action="ActionName"</li>
+    <li>asp-controller="ControllerName"</li>
+    <li>asp-route-id="123</li>
+    <li>asp-route-name="gcp"</li>
+    <li>asp-route...="xxx"</li>
+    <li>asp-route="default"</li>
+</ul>
+@{
+    var routeData = new Dictionary<string, string>()
+    {
+        {"name","GiangNguyen"},
+        {"id","123"},
+        {"class","ABC"}
+    };
+}
+<a asp-action="Index" asp-controller="Product" asp-area="ProductManage" 
+   asp-all-route-data="@routeData"
+   @* asp-route-name="GCP" *@
+   @* asp-route-Abc="XYZ" *@
+   @* asp-route-id="3"  *@
+   >
+    Ví dụ
+</a>
+<hr/>
+<p>
+    @Url.ActionLink()
+</p>
+<p>
+    @Url.Action()
+</p>
+<p>
+    @Url.Action("Privacy", new { id = 111, name = "GCP" })
+</p>
+<p>
+    @Url.Action("Jupiter", "Planet", new { })
+</p>
+<p>
+    @Url.Action("PlanetInfo", "Planet", new { id = 3 })
+</p>
+<p>
+    @Url.Action("Index","Product",new {area = "ProductManage",id=123})
+</p>
+<p>
+    @Url.RouteUrl("default",new {action="Privacy",controller="Home",id=123,name="GCP"})
+</p>
+<p>
+    @Url.RouteUrl("neptune3")
+</p>
