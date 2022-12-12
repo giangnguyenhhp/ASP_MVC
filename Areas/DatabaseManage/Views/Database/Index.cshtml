@@ -1,0 +1,58 @@
+﻿@using ASP_MVC.Models
+@using System.Data
+@using Microsoft.EntityFrameworkCore
+@inject MasterDbContext DbContext
+@{
+    ViewData["Title"] = "Thông tin Database";
+    var connect = DbContext.Database.GetDbConnection();
+    var dbName = connect.Database;
+    var canConnect = await DbContext.Database.CanConnectAsync();
+    await DbContext.Database.GetPendingMigrationsAsync();
+    await DbContext.Database.GetAppliedMigrationsAsync();
+}
+
+<partial name="_AlertMessage"/>
+
+<h2>Thông tin cơ sở dữ liệu</h2>
+<p>DatabaseName = @dbName</p>
+<p>Source = @connect.DataSource</p>
+<p>State = @connect.State</p>
+<hr/>
+<h2>Thông tin Migrations</h2>
+@foreach (var migration in await DbContext.Database.GetAppliedMigrationsAsync())
+{
+    <p>@migration</p>
+}
+@foreach (var migration in await DbContext.Database.GetPendingMigrationsAsync())
+{
+    <p>@migration (pending)</p>
+}
+
+@if (!canConnect)
+{
+    <p class="alert alert-danger">Không thể kết nối Database</p>
+}
+
+@if ((await DbContext.Database.GetPendingMigrationsAsync()).Any())
+{
+    <form method="post">
+    <button class="btn btn-success" asp-action="CreateDb">Tạo Databse (Cập nhật migrations)</button>
+    </form>
+}
+<hr/>
+
+@if (canConnect)
+{
+    <h2>Table</h2>
+    await DbContext.Database.OpenConnectionAsync();
+    var table = await DbContext.Database.GetDbConnection().GetSchemaAsync("Tables");
+    <ul class="">
+        @foreach (DataRow row in table.Rows)
+        {
+            <li class="">
+                @row["TABLE_NAME"]
+            </li>
+        }
+    </ul>
+    <a class="btn btn-danger" asp-action="DeleteDb">Xóa Database : @dbName</a>
+}

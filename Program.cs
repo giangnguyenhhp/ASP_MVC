@@ -1,7 +1,9 @@
 using ASP_MVC.ExtendMethods;
+using ASP_MVC.Models;
 using ASP_MVC.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.EntityFrameworkCore;
 
 // ReSharper disable All
 
@@ -27,6 +29,13 @@ builder.Services.Configure<RazorViewEngineOptions>(option =>
 // builder.Services.AddSingleton(typeof(ProductService));
 builder.Services.AddSingleton(typeof(ProductService), typeof(ProductService));
 builder.Services.AddSingleton<PlanetService>();
+
+//Connect to PostgreSQl
+var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+
+//For Entity Framework
+builder.Services.AddDbContext<MasterDbContext>(options =>
+    options.UseNpgsql(connectionString));
 
 var app = builder.Build();
 

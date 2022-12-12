@@ -1,0 +1,15 @@
+﻿@model dynamic
+
+@{
+    ViewBag.Title = "Xóa Database";
+}
+
+<h1>@ViewBag.Title</h1>
+<p class="alert alert-danger">Có chắc chắn xóa ?</p>
+<form method="post">
+    <button type="submit" class="btn btn-danger">
+        Xóa Database
+    </button>
+    <hr/>
+    <a class="btn btn-primary" asp-action="Index">Database Manage</a>
+</form>
