@@ -1,6 +1,8 @@
+using System.Configuration;
 using ASP_MVC.ExtendMethods;
 using ASP_MVC.Models;
 using ASP_MVC.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
@@ -36,6 +38,97 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 //For Entity Framework
 builder.Services.AddDbContext<MasterDbContext>(options =>
     options.UseNpgsql(connectionString));
+
+//Đăng kí Identity Framework cho ứng dụng
+builder.Services.AddIdentity<AppUser, IdentityRole>(options => // IdentityOptions
+    {
+        //Thiết lập về password 
+        options.Password.RequireDigit = false; //Không bắt phải có số
+        options.Password.RequireLowercase = false; // Không bắt phải có chữ thường
+        options.Password.RequireUppercase = false; //Không bắt phải có chữ hoa
+        options.Password.RequireNonAlphanumeric = false; //Không bắt phải có kí tự đặc biệt
+        options.Password.RequiredLength = 3; // Độ dài tối thiểu 3 kí tự
+        options.Password.RequiredUniqueChars = 1; // Số kí tự riêng biệt
+    
+        // Cấu hình lockout - khóa user
+        options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(2); // Khóa 2 phút
+        options.Lockout.MaxFailedAccessAttempts = 3; // Thất bại 3 lần là khóa
+        options.Lockout.AllowedForNewUsers = true;
+    
+        // Cấu hình về user
+        options.User.AllowedUserNameCharacters = // các kí tự đặt tên user
+            "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
+        options.User.RequireUniqueEmail = true; // Email là duy nhất
+    
+        // Cấu hình đăng nhập
+        options.SignIn.RequireConfirmedEmail = true; // Yêu cầu confrim Email
+        options.SignIn.RequireConfirmedPhoneNumber = false; //Yêu cầu confrim sđt
+        options.SignIn.RequireConfirmedAccount = true; // Yêu cầu xác minh tài khoản
+    })
+    .AddEntityFrameworkStores<MasterDbContext>()
+    .AddDefaultTokenProviders();
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.LoginPath = "/login/";
+    options.LogoutPath = "/logout/";
+    options.AccessDeniedPath = "/khongduoctruycap.html";
+});
+
+//Add Service Authorization Policy
+builder.Services.AddAuthorization(options =>
+{
+    
+    options.AddPolicy("AllowEditRole", policyBuilder => //Admin/Role/Index
+    {
+        //Điều kiện của Policy
+        policyBuilder.RequireAuthenticatedUser();
+        policyBuilder.RequireRole("Admin");
+        policyBuilder.RequireRole("Editor");
+        // policyBuilder.RequireClaim("Bằng Lái Xe", "Bằng B1");
+
+        //Claims-based authorization
+        // policyBuilder.RequireClaim("ClaimType", "ClaimValue1", "giatri2");
+        // policyBuilder.RequireClaim("ClaimType", new string[]
+        // {
+        //     "giatri1", "giatri2"
+        // });
+        // IdentityRoleClaim<string> claim1;
+        // IdentityUserClaim<string> claim2;
+        // Claim claim3;
+    });
+    options.AddPolicy("ShowAdminMenu", pb =>
+    {
+        pb.RequireRole("Admin");
+    });
+});
+
+//Add Service Authentication
+builder.Services.AddAuthentication()
+    .AddGoogle(options =>
+    {
+        var gConfig = builder.Configuration.GetSection("Authenticate:Google");
+        options.ClientId = gConfig["ClientId"];
+        options.ClientSecret = gConfig["ClientSecret"];
+        //https://localhost:5001/sigin-google
+        options.CallbackPath = "/dang-nhap-tu-google";
+    })
+    .AddFacebook(options =>
+    {
+        var fConfig = builder.Configuration.GetSection("Authenticate:Facebook");
+        options.AppId = fConfig["AppId"];
+        options.AppSecret = fConfig["AppSecret"];
+        //https://localhost:5001/sigin-facebook
+        options.CallbackPath = "/dang-nhap-tu-facebook";
+    })
+    // .AddTwitter()
+    // .AddMicrosoftAccount()
+    ;
+
+//Đăng kí Identity UI : giao diện mặc định hệ thống tự sinh ra
+// builder.Services.AddDefaultIdentity<User>()
+//     .AddEntityFrameworkStores<MasterDbContext>()
+//     .AddDefaultTokenProviders();
 
 var app = builder.Build();
 
