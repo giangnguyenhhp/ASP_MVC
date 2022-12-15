@@ -9,9 +9,9 @@
     <ItemGroup>
       <Folder Include="Areas\DatabaseManage\Data" />
       <Folder Include="Areas\DatabaseManage\Models" />
-      <Folder Include="Areas\ProductManage\Data" />
-      <Folder Include="Areas\ProductManage\Models" />
+      <Folder Include="mailssave" />
       <Folder Include="Pages\Shared" />
+      <Folder Include="smsSave" />
       <Folder Include="wwwroot\Planet" />
     </ItemGroup>
 

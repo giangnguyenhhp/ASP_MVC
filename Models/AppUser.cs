@@ -1,13 +1,17 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.AspNetCore.Identity;
 
-namespace ASP_MVC.Models;
-
-public class AppUser : IdentityUser
+namespace ASP_MVC.Models 
 {
-    [StringLength(400)]
-    public string HomeAddress { get; set; }
-    
-    public string? BirthDate { get; set; }
+    public class AppUser: IdentityUser 
+    {
+          [Column(TypeName = "nvarchar")]
+          [StringLength(400)]  
+          public string? HomeAdress { get; set; }
+
+          // [Required]       
+          [DataType(DataType.Date)]
+          public DateTime? BirthDate { get; set; }
+    }
 }

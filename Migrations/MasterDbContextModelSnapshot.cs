@@ -30,8 +30,8 @@ namespace ASPMVC.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("integer");
 
-                    b.Property<string>("BirthDate")
-                        .HasColumnType("text");
+                    b.Property<DateTimeOffset?>("BirthDate")
+                        .HasColumnType("timestamp with time zone");
 
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
@@ -44,8 +44,7 @@ namespace ASPMVC.Migrations
                     b.Property<bool>("EmailConfirmed")
                         .HasColumnType("boolean");
 
-                    b.Property<string>("HomeAddress")
-                        .IsRequired()
+                    b.Property<string>("HomeAdress")
                         .HasMaxLength(400)
                         .HasColumnType("character varying(400)");
 

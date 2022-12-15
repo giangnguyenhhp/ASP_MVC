@@ -17,6 +17,7 @@ public class MasterDbContext : IdentityDbContext<AppUser>
     
     protected override void OnModelCreating(ModelBuilder modelbuilder)
     {
+        modelbuilder.ApplyUtcDateTimeConverter();//Put before seed data and after model creation
         base.OnModelCreating(modelbuilder);
         foreach (var entityType in modelbuilder.Model.GetEntityTypes())
         {

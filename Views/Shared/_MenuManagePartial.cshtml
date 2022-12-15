@@ -1,10 +1,26 @@
-﻿<div class="dropdown">
-    <button class="btn btn-outline-danger dropdown-toggle" data-bs-toggle="dropdown" href="#" id="manageDropdownMenu">
-        Manage
-    </button>
-    <div class="dropdown-menu" aria-labelledby="manageDropdownMenu" >
-        <a class="dropdown-item" asp-action="Index" asp-controller="Database" asp-area="DatabaseManage">
-            Database
-        </a>
+﻿@using Microsoft.AspNetCore.Authorization
+@inject IAuthorizationService AuthorizationService;
+
+@{
+    var result = await AuthorizationService.AuthorizeAsync(User, "ShowAdminMenu");
+}
+
+@if (result.Succeeded)
+{
+    <div class="dropdown">
+        <button class="btn btn-outline-danger dropdown-toggle" data-bs-toggle="dropdown" href="#" id="manageDropdownMenu">
+            Manage
+        </button>
+        <div class="dropdown-menu" aria-labelledby="manageDropdownMenu">
+            <a class="dropdown-item" asp-action="Index" asp-controller="Database" asp-area="DatabaseManage">
+                Database
+            </a>
+            <a class="dropdown-item" asp-action="Index" asp-controller="Role" asp-area="Identity">
+                Quản Lý Role (vai trò)
+            </a>
+            <a class="dropdown-item" asp-action="Index" asp-controller="User" asp-area="Identity">
+                Quản Lý User (thành viên)
+            </a>
+        </div>
     </div>
-</div>
+}
