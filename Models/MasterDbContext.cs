@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace ASP_MVC.Models;
@@ -28,5 +28,7 @@ public class MasterDbContext : IdentityDbContext<AppUser>
             }
         }
     }
+    
+    public DbSet<Contact> Contacts { get; set; }
 
 }

@@ -1,0 +1,33 @@
+{
+  "name": "asp_mvc",
+  "version": "1.0.0",
+  "description": "- Là một lớp kế thừa từ lớp Controller : Microsoft.AspnetCore.MVC.Controller\r - Action trong Controller là một phương thức public (không được static)\r - Action có thể trả về bất kì kiểu dữ lệu nào , thường là IActionResult\r - Các dịch vụ Inject vào Controller qua hàm tạo\r ## View\r - Là file .cshtml\r - View cho Action lưu tại : Views/ControllerName/ActionName.cshtml\r - Thêm thư mục lưu trữ View :\r ```\r   builder.Services.Configure<RazorViewEngineOptions>(option =>\r   {\r   // Views/Controller/Action.cshtml\r   // MyView/Controller/Action.cshtml",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/giangnguyenhhp/ASP_MVC.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/giangnguyenhhp/ASP_MVC/issues"
+  },
+  "homepage": "https://github.com/giangnguyenhhp/ASP_MVC#readme",
+  "dependencies": {
+    "gulp": "^4.0.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-cssmin": "^0.2.0",
+    "gulp-less": "^5.0.0",
+    "gulp-postcss": "^9.0.1",
+    "gulp-rename": "^2.0.0",
+    "gulp-sass": "^5.1.0",
+    "gulp-uglify": "^3.0.2",
+    "node-sass": "^8.0.0",
+    "postcss": "^8.4.20",
+    "rimraf": "^3.0.2",
+    "sass": "^1.56.2"
+  }
+}

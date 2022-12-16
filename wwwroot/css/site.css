@@ -1,18 +1,1 @@
-html {
-  font-size: 14px;
-}
-
-@media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-html {
-  position: relative;
-  min-height: 100%;
-}
-
-body {
-  margin-bottom: 60px;
-}
+body{background:#fff;color:#1d1d1f;margin-bottom:60px}html{position:relative;min-height:100%}.footer{position:absolute;bottom:0;width:100%;white-space:nowrap;line-height:60px}.app-navbar{background:rgba(0,0,0,.8)}.app-navbar .text-dark{color:#b9c3ce!important}.app-navbar .text-dark:hover{color:#fff!important}.app-navbar .navbar-brand{color:rgba(181,106,216,.9019607843)}.app-navbar .navbar-brand:hover{color:rgba(226,64,212,.9019607843)!important}.app-navbar .dropdown-toggle{border-color:#9d4db7;color:#9d4db7}.app-navbar .dropdown-toggle:hover{background-color:#8a2be2}.app-navbar .dropdown-toggle:focus{background-color:#8a2be2;border-color:#8a2be2}.nav-link{color:#b9c3ce!important}.nav-link:hover{color:#fff!important}.contact-firstCol{background-color:#9854a0;color:#fff;text-align:center;border-radius:15px}.contact-firstCol h4{line-height:40px;font-weight:400;margin-top:20px}.contact-firstCol img{width:100px}.formContact label{font-weight:700}.formContact .btn-primary{background-color:#9854a0!important;border-color:#9854a0!important}
