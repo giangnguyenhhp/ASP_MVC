@@ -11,7 +11,7 @@
         <button class="btn btn-outline-danger dropdown-toggle" data-bs-toggle="dropdown" href="#" id="manageDropdownMenu">
             Manage
         </button>
-        <div class="dropdown-menu" aria-labelledby="manageDropdownMenu">
+        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="manageDropdownMenu">
             <a class="dropdown-item" asp-action="Index" asp-controller="Database" asp-area="DatabaseManage">
                 Database
             </a>
@@ -23,6 +23,9 @@
             </a>
             <a class="dropdown-item" asp-action="Index" asp-controller="User" asp-area="Identity">
                 Quản Lý User (thành viên)
+            </a>
+            <a class="dropdown-item" asp-action="Index" asp-controller="Category" asp-area="Blog">
+                Quản lý chuyên mục Blog
             </a>
         </div>
     </div>

@@ -1,3 +1,5 @@
+using ASP_MVC.Models.Blog;
+using ASP_MVC.Models.Contacts;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -27,8 +29,13 @@ public class MasterDbContext : IdentityDbContext<AppUser>
                 entityType.SetTableName(tableName.Substring(6));
             }
         }
+
+        modelbuilder.Entity<Category>(entity =>
+        {
+            entity.HasIndex(c => c.Slug);
+        });
     }
     
     public DbSet<Contact> Contacts { get; set; }
-
+    public DbSet<Category> Categories { get; set; }
 }

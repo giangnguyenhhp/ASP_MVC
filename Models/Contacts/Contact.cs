@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace ASP_MVC.Models;
+namespace ASP_MVC.Models.Contacts;
 
 public class Contact
 {

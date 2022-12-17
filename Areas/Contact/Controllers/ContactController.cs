@@ -1,9 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ASP_MVC.Models;
 using Microsoft.AspNetCore.Authorization;
@@ -64,7 +59,7 @@ namespace ASP_MVC.Areas.Contact.Controllers
         [HttpPost("/contact/")]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> SendContact([Bind("FullName,Email,Message,Phone")] Models.Contact contact)
+        public async Task<IActionResult> SendContact([Bind("FullName,Email,Message,Phone")] Models.Contacts.Contact contact)
         {
             if (ModelState.IsValid)
             {
