@@ -62,7 +62,7 @@ namespace ASP_MVC.Areas.Blog.Controllers
                 });
                 if (category.CategoryChildren?.Count > 0)
                 {
-                    CreateSelectItems(category.CategoryChildren.ToList(),des,level + 1);
+                    CreateSelectItems(category.CategoryChildren.ToList(), des, level + 1);
                 }
             }
         }
@@ -73,15 +73,15 @@ namespace ASP_MVC.Areas.Blog.Controllers
             var qr = _context.Categories.Include(c => c.ParentCategory)
                 .ThenInclude(c => c.CategoryChildren);
             var categories = (await qr.ToListAsync()).Where(x => x.ParentCategory == null).ToList();
-            categories.Insert(0,new Category
+            categories.Insert(0, new Category
             {
                 Id = -1,
                 Title = "Không có danh mục cha"
             });
-            
+
             var items = new List<Category>();
-            CreateSelectItems(categories,items,0);
-            
+            CreateSelectItems(categories, items, 0);
+
             ViewData["ParentCategoryId"] = new SelectList(items, "Id", "Title");
             return View();
         }
@@ -91,7 +91,9 @@ namespace ASP_MVC.Areas.Blog.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateAsync([Bind("Title,Description,Slug,ParentCategoryId")] Category category)
+        public async Task<IActionResult> CreateAsync(
+            [Bind("Title,Description,Slug,ParentCategoryId")]
+            Category category)
         {
             if (ModelState.IsValid)
             {
@@ -109,15 +111,15 @@ namespace ASP_MVC.Areas.Blog.Controllers
             var qr = _context.Categories.Include(c => c.ParentCategory)
                 .ThenInclude(c => c.CategoryChildren);
             var categories = (await qr.ToListAsync()).Where(x => x.ParentCategory == null).ToList();
-            categories.Insert(0,new Category
+            categories.Insert(0, new Category
             {
                 Id = -1,
                 Title = "Không có danh mục cha"
             });
-            
+
             var items = new List<Category>();
-            CreateSelectItems(categories,items,0);
-            
+            CreateSelectItems(categories, items, 0);
+
             ViewData["ParentCategoryId"] = new SelectList(items, "Id", "Title", category.ParentCategoryId);
             return View(category);
         }
@@ -139,15 +141,15 @@ namespace ASP_MVC.Areas.Blog.Controllers
             var qr = _context.Categories.Include(c => c.ParentCategory)
                 .ThenInclude(c => c.CategoryChildren);
             var categories = (await qr.ToListAsync()).Where(x => x.ParentCategory == null).ToList();
-            categories.Insert(0,new Category
+            categories.Insert(0, new Category
             {
                 Id = -1,
                 Title = "Không có danh mục cha"
             });
-            
+
             var items = new List<Category>();
-            CreateSelectItems(categories,items,0);
-            
+            CreateSelectItems(categories, items, 0);
+
             ViewData["ParentCategoryId"] = new SelectList(items, "Id", "Title", category.ParentCategoryId);
             return View(category);
         }
@@ -161,6 +163,7 @@ namespace ASP_MVC.Areas.Blog.Controllers
             [Bind("Id,Title,Description,Slug,ParentCategoryId")]
             Category category)
         {
+            var canUpdate = true;
             if (id != category.Id)
             {
                 return NotFound();
@@ -168,17 +171,51 @@ namespace ASP_MVC.Areas.Blog.Controllers
 
             if (category.ParentCategoryId == category.Id)
             {
-                ModelState.AddModelError(string.Empty,"Phải chọn danh mục cha khác");
+                ModelState.AddModelError(string.Empty, "Phải chọn danh mục cha khác");
+                canUpdate = false;
             }
 
-            if (ModelState.IsValid && category.ParentCategoryId != category.Id)
+            //Kiểm tra thiết lập danh mục cha phù hợp
+            if (canUpdate && category.ParentCategoryId != null)
+            {
+                var childCategory = await _context.Categories
+                    .Include(x => x.CategoryChildren)
+                    .Where(x => x.ParentCategoryId == category.Id).ToListAsync();
+                
+                //Func check Id
+                Func<List<Category>, bool> checkCateIds = null;
+                checkCateIds = (cates) =>
+                {
+                    foreach (var cate in cates)
+                    {
+                        Console.WriteLine(cate.Title);
+                        if (cate.Id==category.ParentCategoryId)
+                        {
+                            canUpdate = false;
+                            ModelState.AddModelError(string.Empty,"Phải chọn danh mục cha khác");
+                            return true;
+                        }
+
+                        if (cate.CategoryChildren != null)
+                        {
+                            return checkCateIds(cate.CategoryChildren.ToList());
+                        }
+                    }
+                    return false;
+                };
+                //End Func
+                checkCateIds(childCategory.ToList());
+            }
+
+            if (ModelState.IsValid && canUpdate)
             {
                 try
                 {
-                    if (category.ParentCategoryId==-1)
+                    if (category.ParentCategoryId == -1)
                     {
                         category.ParentCategoryId = null;
                     }
+
                     _context.Update(category);
                     await _context.SaveChangesAsync();
                 }
@@ -200,15 +237,15 @@ namespace ASP_MVC.Areas.Blog.Controllers
             var qr = _context.Categories.Include(c => c.ParentCategory)
                 .ThenInclude(c => c.CategoryChildren);
             var categories = (await qr.ToListAsync()).Where(x => x.ParentCategory == null).ToList();
-            categories.Insert(0,new Category
+            categories.Insert(0, new Category
             {
                 Id = -1,
                 Title = "Không có danh mục cha"
             });
-            
+
             var items = new List<Category>();
-            CreateSelectItems(categories,items,0);
-            
+            CreateSelectItems(categories, items, 0);
+
             ViewData["ParentCategoryId"] = new SelectList(items, "Id", "Title", category.ParentCategoryId);
             return View(category);
         }

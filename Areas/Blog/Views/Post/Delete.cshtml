@@ -1,0 +1,27 @@
+@model ASP_MVC.Models.Blog.Post
+
+@{
+    ViewData["Title"] = "Xóa bài viết";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>@ViewData["Title"]</h1>
+
+<h3>Bạn có chắc chắn xóa không ?</h3>
+<div>
+    <hr/>
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+        <dd class="col-sm-10 fw-bolder">
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+    </dl>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="PostId"/>
+        <input type="submit" value="Xóa" class="btn btn-danger"/> |
+        <a class="btn btn-primary" asp-action="Index">Danh sách bài viết</a>
+    </form>
+</div>

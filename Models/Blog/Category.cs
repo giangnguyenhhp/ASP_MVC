@@ -39,5 +39,7 @@ public class Category
     [ForeignKey("ParentCategoryId")]
     [Display(Name = "Danh mục cha")]
     public Category? ParentCategory { set; get; }
+    
+    public List<Post>? Posts { get; set; }
 
 }

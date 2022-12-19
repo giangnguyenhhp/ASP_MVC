@@ -32,10 +32,16 @@ public class MasterDbContext : IdentityDbContext<AppUser>
 
         modelbuilder.Entity<Category>(entity =>
         {
-            entity.HasIndex(c => c.Slug);
+            entity.HasIndex(c => c.Slug).IsUnique();
+        });
+
+        modelbuilder.Entity<Post>(entity =>
+        {
+            entity.HasIndex(p => p.Slug).IsUnique();
         });
     }
     
     public DbSet<Contact> Contacts { get; set; }
     public DbSet<Category> Categories { get; set; }
+    public DbSet<Post> Posts { get; set; }
 }
