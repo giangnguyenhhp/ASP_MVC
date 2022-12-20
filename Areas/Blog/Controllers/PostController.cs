@@ -246,7 +246,7 @@ namespace ASP_MVC.Areas.Blog.Controllers
                                 select postCate)
                             .ToList()
                         ;
-                    _context.RemoveRange(removeCateInPosts);
+                    _context.CategoryPost.RemoveRange(removeCateInPosts);
                     var addCategories = postUpdate.Categories?.Where(x => oldCateIds != null && !oldCateIds.Contains(x.Id)).ToList();
                     if (addCategories != null)
                         foreach (var category in addCategories)

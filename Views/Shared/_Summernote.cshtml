@@ -1,0 +1,17 @@
+﻿@model ASP_MVC.Models.SummerNote
+
+
+@if (Model.LoadLibrary)
+{
+    <script src="~/lib/summernote/summernote-lite.min.js"></script>
+    <link href="~/lib/summernote/summernote-lite.min.css" rel="stylesheet"/>
+}
+<script>
+    $(document).ready(function() {
+                  $('#@Model.IdEditor').summernote({
+                    tabsize: @Model.TabSize,
+                    height: @Model.Height,
+                    toolbar: @Html.Raw(Model.Toolbar)
+                  });
+    })
+</script>

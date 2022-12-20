@@ -1,7 +1,7 @@
 @model ASP_MVC.Models.Blog.Category
 
 @{
-    ViewData["Title"] = "Tạo chuyên mục blog";
+    ViewData["Title"] = "Tạo danh mục blog";
     Layout = "~/Views/Shared/_Layout.cshtml";
 
     // IEnumerable<SelectListItem> items = null;
@@ -43,7 +43,7 @@
 <h4>Category</h4>
 <hr/>
 <div class="row">
-    <div class="col-md-4">
+    <div class="w-100">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -57,7 +57,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
-                <textarea rows="5" asp-for="Description" class="form-control"></textarea>
+                <textarea rows="5" asp-for="Description" class="form-control" ></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -79,3 +79,7 @@
 @section Scripts {
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }
+@{
+    var summernote = new SummerNote("Description");
+}
+<partial name="_Summernote" model="summernote" />

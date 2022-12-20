@@ -33,7 +33,7 @@ public class Category
     public ICollection<Category>? CategoryChildren { get; set; }
 
     // Category cha (FKey)
-    [Display(Name = "ID Danh mục cha")]
+    [Display(Name = "ID danh mục cha")]
     public int? ParentCategoryId { get; set; }
     
     [ForeignKey("ParentCategoryId")]

@@ -10,7 +10,7 @@
 <h4>Category</h4>
 <hr/>
 <div class="row">
-    <div class="col-md-8">
+    <div class="col-md-12">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id"/>
@@ -48,3 +48,7 @@
 @section Scripts {
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }
+@{
+    var summernote = new SummerNote("Description");
+}
+<partial name="_Summernote" model="summernote" />

@@ -70,3 +70,11 @@
     
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }
+@{
+    var summernote = new SummerNote("Content")
+    {
+        Height = 400,
+    };
+    
+}
+<partial name="_Summernote" model="summernote" />
