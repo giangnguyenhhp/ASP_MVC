@@ -1,13 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using ASP_MVC.Areas.Blog.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ASP_MVC.Models;
-using ASP_MVC.Models.Blog;
 using ASP_MVC.Utilities;
 using Microsoft.AspNetCore.Identity;
 

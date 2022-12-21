@@ -5,7 +5,6 @@ using Microsoft.EntityFrameworkCore;
 using ASP_MVC.Models;
 using ASP_MVC.Models.Blog;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace ASP_MVC.Areas.Blog.Controllers
 {

@@ -18,3 +18,14 @@
         </h2>
     </div >
 </div>
+
+<textarea id="summernoteEditor"></textarea>
+<textarea id="summernoteEditor2"></textarea>
+
+@{
+    var summernote = new SummerNote("summernoteEditor");
+    var summernote2 = new SummerNote("summernoteEditor2",false);
+}
+
+<partial name="_Summernote" model="summernote"/>
+<partial name="_Summernote" model="summernote2"/>

@@ -5,6 +5,7 @@ using ASP_MVC.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 
 // ReSharper disable All
 
@@ -32,13 +33,13 @@ builder.Services.Configure<RazorViewEngineOptions>(option =>
 // builder.Services.AddSingleton(typeof(ProductService));
 builder.Services.AddSingleton(typeof(ProductService), typeof(ProductService));
 builder.Services.AddSingleton<PlanetService>();
-builder.Services.AddSingleton<IdentityErrorDescriber,AppIdentityErrorDescriber>();
+builder.Services.AddSingleton<IdentityErrorDescriber, AppIdentityErrorDescriber>();
 
 //Add SendEmail Service
 builder.Services.AddOptions();
 var mailSettings = builder.Configuration.GetSection("MailSettings");
 builder.Services.Configure<MailSettings>(mailSettings);
-builder.Services.AddSingleton<IEmailSender,SendMailService>();
+builder.Services.AddSingleton<IEmailSender, SendMailService>();
 
 //Connect to PostgreSQl
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
@@ -152,7 +153,14 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
-app.UseStaticFiles();
+app.UseStaticFiles(); // Sử dụng file tĩnh trong thư mục gốc wwwroot
+
+app.UseStaticFiles(new StaticFileOptions() // Tùy biến sử dụng file tĩnh trong một thư mục khác wwwroot ví dụ Uploads
+{
+    FileProvider = new PhysicalFileProvider(
+        Path.Combine(Directory.GetCurrentDirectory(),"Uploads")),
+    RequestPath = "/Uploads",
+});
 
 app.AddStatusCodePage(); // Tùy biến Response có lỗi từ 400 - 599
 
@@ -214,11 +222,10 @@ app.MapControllerRoute(
 );
 
 //Area
-app.MapAreaControllerRoute(
-    name: "product",
-    pattern: "{controller}/{action=Index}/{id?}",
-    areaName: "ProductManage"
-);
+app.MapControllerRoute(
+    name: "MyArea",
+    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+    );
 
 // Controller không có Area
 app.MapControllerRoute(
