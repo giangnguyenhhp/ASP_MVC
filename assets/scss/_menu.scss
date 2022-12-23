@@ -1,32 +1,65 @@
-﻿.app-navbar{
-  background: rgba(0,0,0,0.8);
-  .text-dark{
+﻿.app-navbar {
+  background: rgba(7, 10, 65, 0.8);
+
+  .text-dark {
     color: #b9c3ce !important;
-    &:hover{
+
+    &:hover {
       color: white !important;
     }
   }
-  .navbar-brand{
-    color: #b56ad8e6;
-    &:hover{
-      color: #e240d4e6 !important;
+
+  .navbar-brand {
+    color: #ffffff;
+
+    &:hover {
+      color: rgba(35, 41, 185, 0.8) !important;
     }
   }
-  .dropdown-toggle{
-    border-color:#9d4db7;
-    color: #9d4db7 ;
-    &:hover{
-      background-color: blueviolet;
+
+  .dropdown-toggle {
+    border-color: transparent !important;
+    color: #ffffff;
+
+    &:hover {
+      background-color: transparent;
+      color: #0a53be;
     }
-    &:focus{
-      background-color: blueviolet;
-      border-color: blueviolet;
+
+    &:focus {
+      background-color: transparent;
+      border-color: transparent !important;
     }
   }
 }
-.nav-link{
+
+.nav-link {
   color: #b9c3ce !important;
-  &:hover{
+
+  &:hover {
     color: white !important;
+  }
+}
+
+.category-sidebar {
+  ul, li {
+    list-style: none;
+    padding-left:10px;
+  }
+  a{
+    text-decoration: none;
+    &:hover{
+      color: #4eb305;
+    }
+    &.active{
+      color:red;
+    }
+  }
+  >ul>li>a{font-weight: bold}
+  h4{
+    text-align: center;
+    text-transform: uppercase;
+    border-bottom: 1px solid #0a53be;
+    padding-bottom : 10px;
   }
 }

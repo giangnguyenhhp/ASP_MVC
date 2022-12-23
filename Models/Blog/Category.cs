@@ -6,10 +6,8 @@ namespace ASP_MVC.Models.Blog;
 [Table("Category")]
 public class Category
 {
+    [Key] public int Id { get; set; }
 
-    [Key]
-    public int Id { get; set; }
-    
 
     // Tiều đề Category
     [Required(ErrorMessage = "Phải có tên danh mục")]
@@ -33,13 +31,42 @@ public class Category
     public ICollection<Category>? CategoryChildren { get; set; }
 
     // Category cha (FKey)
-    [Display(Name = "ID danh mục cha")]
-    public int? ParentCategoryId { get; set; }
-    
+    [Display(Name = "ID danh mục cha")] public int? ParentCategoryId { get; set; }
+
     [ForeignKey("ParentCategoryId")]
     [Display(Name = "Danh mục cha")]
     public Category? ParentCategory { set; get; }
-    
+
     public List<Post>? Posts { get; set; }
 
+    /// <summary>
+    /// Lấy ra list Id của CategoryChildren
+    /// </summary>
+    /// <param name="lists"></param>
+    /// <param name="childCategories"></param>
+    public void ChildCategoryIds(List<int> lists, ICollection<Category>? childCategories = null)
+    {
+        childCategories ??= CategoryChildren;
+
+        if (childCategories == null) return;
+        foreach (var childCategory in childCategories)
+        {
+            lists.Add(childCategory.Id);
+            ChildCategoryIds(lists, childCategory.CategoryChildren);
+        }
+    }
+
+    public List<Category> ListParents()
+    {
+        var list = new List<Category>();
+        var parent = ParentCategory;
+        while (parent != null)
+        {
+            list.Add(parent);
+            parent = parent.ParentCategory;
+        }
+
+        list.Reverse();
+        return list;
+    }
 }
