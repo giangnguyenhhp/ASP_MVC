@@ -19,11 +19,11 @@
       <Folder Include="Areas\Files\Data" />
       <Folder Include="Areas\Files\Models" />
       <Folder Include="Areas\Identity\Data" />
-      <Folder Include="Areas\ProductManage\Data" />
-      <Folder Include="Areas\ProductManage\Models" />
+      <Folder Include="Areas\Product\Data" />
       <Folder Include="mailssave" />
       <Folder Include="Pages\Shared" />
       <Folder Include="smsSave" />
+      <Folder Include="Uploads\Products" />
       <Folder Include="wwwroot\Planet" />
     </ItemGroup>
 
@@ -81,6 +81,24 @@
         <ExcludeFromSingleFile>true</ExcludeFromSingleFile>
         <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <_ContentIncludedByDefault Remove="Areas\ProductManage\Views\Product\Index.cshtml" />
+      <_ContentIncludedByDefault Remove="Areas\ProductManage\Views\_ViewImports.cshtml" />
+      <_ContentIncludedByDefault Remove="Areas\ProductManage\Views\_ViewStart.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <AdditionalFiles Include="Areas\Product\Views\ProductManage\Create.cshtml" />
+      <AdditionalFiles Include="Areas\Product\Views\ProductManage\Delete.cshtml" />
+      <AdditionalFiles Include="Areas\Product\Views\ProductManage\Details.cshtml" />
+      <AdditionalFiles Include="Areas\Product\Views\ProductManage\Edit.cshtml" />
+      <AdditionalFiles Include="Areas\Product\Views\ProductManage\Index.cshtml" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Uploads\Products\s3l3o5iv.png" />
     </ItemGroup>
 
 </Project>

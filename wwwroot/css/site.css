@@ -3,6 +3,10 @@ body {
   color: #1d1d1f;
 }
 
+a {
+  text-decoration: none;
+}
+
 html {
   position: relative;
   min-height: 100%;
@@ -116,4 +120,17 @@ body {
 }
 .detailsPost img {
   max-width: 100%;
+}
+
+.photoDetails {
+  position: relative;
+}
+.photoDetails span {
+  position: absolute;
+  bottom: 50%;
+  left: 50%;
+  display: none;
+}
+.photoDetails:hover span {
+  display: block;
 }

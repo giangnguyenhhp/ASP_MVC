@@ -1,7 +1,7 @@
 @model IEnumerable<ASP_MVC.Models.Blog.Category>
 
 @{
-    ViewData["Title"] = "Chuyên mục Blog";
+    ViewData["Title"] = "Danh mục Blog";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -36,7 +36,7 @@
        <tr>
            <td>
                @Html.Raw(prefix) 
-               <a asp-action="Edit" asp-route-id="@item.Id">
+               <a asp-action="Details" asp-route-id="@item.Id">
                    @Html.DisplayFor(modelItem => item.Title)
                </a>
            </td>
@@ -44,7 +44,7 @@
                @Html.DisplayFor(modelItem => item.Slug)
            </td>
            <td>
-               <a class="btn btn-success btn-sm" asp-action="Details" asp-route-id="@item.Id">Chi tiết</a> |
+               <a class="btn btn-success btn-sm" asp-action="Edit" asp-route-id="@item.Id">Chỉnh sửa</a> |
                <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@item.Id">Xóa</a>
            </td>
        </tr>

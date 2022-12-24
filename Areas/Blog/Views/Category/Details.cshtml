@@ -1,25 +1,25 @@
 @model ASP_MVC.Models.Blog.Category
 
 @{
-    ViewData["Title"] = "Nội dung chuyên mục Blog";
+    ViewData["Title"] = "Nội dung danh mục Blog";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>@ViewData["Title"]</h1>
+<h1>@Model.Title</h1>
 
 <div>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-4">
+        <dt class = "col-sm-2">
             Nội dung
         </dt>
-        <dd class = "col-sm-8">
+        <dd class = "col-sm-10">
             @Html.Raw(Model.Description)
         </dd>
-        <dt class = "col-sm-4">
+        <dt class = "col-sm-2">
             Url
         </dt>
-        <dd class = "col-sm-8">
+        <dd class = "col-sm-10">
             @Html.DisplayFor(model => model.Slug)
         </dd>
     </dl>

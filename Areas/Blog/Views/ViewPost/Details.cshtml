@@ -6,7 +6,7 @@
     var otherPost = ViewBag.otherPosts as IQueryable<Post>;
 }
 
-<nav style="--bs-breadcrumb-divider: '>'; " aria-label="breadcrumb">
+<nav style="--bs-breadcrumb-divider: '>';" class="bg-light" aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item">
             <a href="~/">Home</a>
@@ -30,7 +30,7 @@
                     </a>
                 </li>
                 <li class="breadcrumb-item">
-                    <a asp-action="Index" asp-route-categorySlug="@Model.Slug">
+                    <a asp-action="Index" asp-route-categorySlug="@Html.Raw(Model.Slug+".html")">
                         @Model.Title
                     </a>
                 </li>

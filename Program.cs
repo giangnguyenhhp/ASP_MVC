@@ -31,7 +31,7 @@ builder.Services.Configure<RazorViewEngineOptions>(option =>
 // builder.Services.AddSingleton<ProductService>();
 // builder.Services.AddSingleton<ProductService, ProductService>();
 // builder.Services.AddSingleton(typeof(ProductService));
-builder.Services.AddSingleton(typeof(ProductService), typeof(ProductService));
+// builder.Services.AddSingleton(typeof(ProductService), typeof(ProductService));
 builder.Services.AddSingleton<PlanetService>();
 builder.Services.AddSingleton<IdentityErrorDescriber, AppIdentityErrorDescriber>();
 

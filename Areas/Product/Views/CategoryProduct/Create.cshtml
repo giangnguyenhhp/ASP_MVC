@@ -1,0 +1,85 @@
+@model CategoryProduct
+
+@{
+    ViewData["Title"] = "Tạo danh mục blog";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    // IEnumerable<SelectListItem> items = null;
+    var item1 = new List<SelectListItem>();
+    item1.AddRange(new List<SelectListItem>
+    {
+        new() { Text = "Mục 1", Value = "gt1" },
+        new() { Text = "Mục 2", Value = "gt2", Selected = true },
+        new() { Text = "Mục 3", Value = "gt3", Disabled = true },
+    });
+
+    var data = new object[]
+    {
+        new
+        {
+            ten = "GT1",
+            giatri = 1
+        },
+        new
+        {
+            ten = "GT2",
+            giatri = 2
+        },
+        new
+        {
+            ten = "GT3",
+            giatri = 3
+        }
+    };
+    var item2 = new SelectList(data,"giatri","ten",2);
+}
+
+@* <select asp-items="item1"></select> *@
+@* <select asp-items="item2"></select> *@
+
+
+<h1>@ViewData["Title"]</h1>
+
+<h4>Category</h4>
+<hr/>
+<div class="row">
+    <div class="w-100">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="ParentCategoryId" class="control-label"></label>
+                <select asp-for="ParentCategoryId" class="form-control" asp-items="ViewBag.ParentCategoryId"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Title" class="control-label"></label>
+                <input asp-for="Title" class="form-control"/>
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Description" class="control-label"></label>
+                <textarea rows="5" asp-for="Description" class="form-control" ></textarea>
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Slug" class="control-label"></label>
+                <input asp-for="Slug" class="form-control"/>
+                <span asp-validation-for="Slug" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Tạo" class="btn btn-primary my-2"/>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a class="btn btn-primary" asp-action="Index">Danh sách chuyên mục</a>
+</div>
+
+@section Scripts {
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+}
+@{
+    var summernote = new SummerNote("Description");
+}
+<partial name="_Summernote" model="summernote" />

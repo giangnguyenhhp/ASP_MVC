@@ -137,7 +137,6 @@ namespace ASPMVC.Migrations
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("PostId"));
 
                     b.Property<string>("AuthorId")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<string>("Content")
@@ -158,7 +157,6 @@ namespace ASPMVC.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<string>("Slug")
-                        .IsRequired()
                         .HasMaxLength(160)
                         .HasColumnType("character varying(160)");
 
@@ -211,6 +209,113 @@ namespace ASPMVC.Migrations
                     b.ToTable("Contacts");
                 });
 
+            modelBuilder.Entity("ASP_MVC.Models.Product.CategoryProduct", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int?>("ParentCategoryId")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Slug")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("character varying(100)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ParentCategoryId");
+
+                    b.HasIndex("Slug")
+                        .IsUnique();
+
+                    b.ToTable("CategoryProduct");
+                });
+
+            modelBuilder.Entity("ASP_MVC.Models.Product.ProductModel", b =>
+                {
+                    b.Property<int>("ProductId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("ProductId"));
+
+                    b.Property<string>("AuthorId")
+                        .HasColumnType("text");
+
+                    b.Property<string>("Content")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<DateTime>("DateCreated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<DateTime>("DateUpdated")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<decimal>("Price")
+                        .HasColumnType("numeric");
+
+                    b.Property<bool>("Published")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Slug")
+                        .HasMaxLength(160)
+                        .HasColumnType("character varying(160)");
+
+                    b.Property<string>("Title")
+                        .IsRequired()
+                        .HasMaxLength(160)
+                        .HasColumnType("character varying(160)");
+
+                    b.HasKey("ProductId");
+
+                    b.HasIndex("AuthorId");
+
+                    b.HasIndex("Slug")
+                        .IsUnique();
+
+                    b.ToTable("Product");
+                });
+
+            modelBuilder.Entity("ASP_MVC.Models.Product.ProductPhoto", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("FileName")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<int?>("ProductId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("ProductPhotos");
+                });
+
             modelBuilder.Entity("CategoryPost", b =>
                 {
                     b.Property<int>("CategoriesId")
@@ -224,6 +329,21 @@ namespace ASPMVC.Migrations
                     b.HasIndex("PostsPostId");
 
                     b.ToTable("CategoryPost");
+                });
+
+            modelBuilder.Entity("CategoryProductProductModel", b =>
+                {
+                    b.Property<int>("CategoryProductsId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("ProductsProductId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("CategoryProductsId", "ProductsProductId");
+
+                    b.HasIndex("ProductsProductId");
+
+                    b.ToTable("CategoryProductProductModel");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -371,11 +491,36 @@ namespace ASPMVC.Migrations
                 {
                     b.HasOne("ASP_MVC.Models.AppUser", "Author")
                         .WithMany()
-                        .HasForeignKey("AuthorId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("AuthorId");
 
                     b.Navigation("Author");
+                });
+
+            modelBuilder.Entity("ASP_MVC.Models.Product.CategoryProduct", b =>
+                {
+                    b.HasOne("ASP_MVC.Models.Product.CategoryProduct", "ParentCategory")
+                        .WithMany("CategoryChildren")
+                        .HasForeignKey("ParentCategoryId");
+
+                    b.Navigation("ParentCategory");
+                });
+
+            modelBuilder.Entity("ASP_MVC.Models.Product.ProductModel", b =>
+                {
+                    b.HasOne("ASP_MVC.Models.AppUser", "Author")
+                        .WithMany()
+                        .HasForeignKey("AuthorId");
+
+                    b.Navigation("Author");
+                });
+
+            modelBuilder.Entity("ASP_MVC.Models.Product.ProductPhoto", b =>
+                {
+                    b.HasOne("ASP_MVC.Models.Product.ProductModel", "Product")
+                        .WithMany("ProductPhotos")
+                        .HasForeignKey("ProductId");
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("CategoryPost", b =>
@@ -389,6 +534,21 @@ namespace ASPMVC.Migrations
                     b.HasOne("ASP_MVC.Models.Blog.Post", null)
                         .WithMany()
                         .HasForeignKey("PostsPostId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("CategoryProductProductModel", b =>
+                {
+                    b.HasOne("ASP_MVC.Models.Product.CategoryProduct", null)
+                        .WithMany()
+                        .HasForeignKey("CategoryProductsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("ASP_MVC.Models.Product.ProductModel", null)
+                        .WithMany()
+                        .HasForeignKey("ProductsProductId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
@@ -447,6 +607,16 @@ namespace ASPMVC.Migrations
             modelBuilder.Entity("ASP_MVC.Models.Blog.Category", b =>
                 {
                     b.Navigation("CategoryChildren");
+                });
+
+            modelBuilder.Entity("ASP_MVC.Models.Product.CategoryProduct", b =>
+                {
+                    b.Navigation("CategoryChildren");
+                });
+
+            modelBuilder.Entity("ASP_MVC.Models.Product.ProductModel", b =>
+                {
+                    b.Navigation("ProductPhotos");
                 });
 #pragma warning restore 612, 618
         }

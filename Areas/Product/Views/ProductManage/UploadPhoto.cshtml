@@ -1,0 +1,154 @@
+﻿@model ASP_MVC.Areas.Product.Controllers.ProductManageController.UploadOneFile
+
+@{
+    var product = ViewData["Product"] as ProductModel;
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <title>title</title>
+</head>
+<body>
+
+<div>
+    <h1>Upload Photo @product?.Title</h1>
+</div>
+
+<div class="row">
+    <form method="POST" enctype="multipart/form-data">
+        <label asp-for="@Model.FileUpload"></label>
+        <input asp-for="FileUpload"/>
+        <span asp-validation-for="FileUpload"></span>
+
+        <button class="btn btn-primary" asp-action="UploadPhoto" asp-route-id="@product?.ProductId">Upload</button>
+    </form>
+</div>
+
+<hr/>
+
+<div>
+    <input
+        class="collapse"
+        type="file"
+        id="selectFileUpload"
+        onchange="autoUploadPhoto()"
+    />
+    <span class="btn btn-primary" onclick="ClickButtonUploadPhotos()">Uploads</span>
+</div>
+
+<div id="box-photo-upload" class="d-flex flex-wrap photo-upload" data-id="@product?.ProductId">
+</div>
+</body>
+</html>
+@section Scripts
+{
+    <script>
+    function autoUploadPhoto()
+    {
+        let formData = new FormData();
+        let id = $("#box-photo-upload").data("id")
+        formData.append("id", id)
+        
+        let numberOfPhotos = document.getElementById("selectFileUpload").files.length;
+        if (numberOfPhotos===0) return
+        let fileData = document.getElementById("selectFileUpload").files[0]
+        formData.append("FileUpload", fileData)
+                         
+        let urlUploadPhoto = "@Url.Action("UploadPhotoApi")"
+                                
+        $.ajax({
+            data : formData,
+            cache : false,
+            url : urlUploadPhoto,
+            type : "POST",
+            contentType : false,
+            processData : false,
+            success : function(data)
+               {
+                    //... xử lý dữ liệu lấy được
+                    LoadPhotos();            
+               }
+        })
+    }
+    
+    function ClickButtonUploadPhotos()
+    {
+        $("#selectFileUpload").click()
+    }
+    
+    function setClickDeletePhoto()
+    {
+        $("#box-photo-upload .photoDetails span").click(function(){
+            
+            if (confirm("Có chắc chắn xóa ảnh không ?") !== true) return
+            
+            let spanButton = $(this);
+            let id = spanButton.data("id");
+            
+            let formData = new FormData();
+            formData.append("id", id)
+                    
+            let urlDeletePhoto = "@Url.Action("DeletePhoto")";
+                        
+            $.ajax({
+               data : formData,
+               cache : false,
+               url : urlDeletePhoto,
+               type : "POST",
+               contentType : false,
+               processData : false,
+               success : function(data)
+                  {
+                   //... xử lý dữ liệu lấy được
+                    LoadPhotos();            
+                  }
+            })
+        });
+    }
+    
+    function LoadPhotos()
+    {
+        let box = $("#box-photo-upload");
+        let productId = box.data("id");
+        box.empty();
+        
+        let formData = new FormData();
+        formData.append("id", productId)
+        
+        let urlListPhoto = "@Url.Action("ListPhotos")";
+            
+        $.ajax({
+            data : formData,
+            cache : false,
+            url : urlListPhoto,
+            type : "POST",
+            contentType : false,
+            processData : false,
+            success : function(data)
+                {
+                    //... xử lý dữ liệu lấy được
+                    data.photos.forEach(function(item)
+                    {
+                        // console.log(item.id);
+                        // console.log(item.path);
+                        let e = $(
+                                    '<div class="photoDetails w-25 p-1">'
+                                      +  '<img class="w-100" alt="" src="'+ item.path +'"/>'
+                                      +  '<span class="btn btn-danger" data-id="'+ item.id +'">Xóa</span> </div>'                       
+                        );
+                        box.append(e);
+                    })
+                    
+                    setClickDeletePhoto()
+                }
+        })
+    }
+    
+    $(document).ready(function()
+    {
+        LoadPhotos();    
+    })
+    </script>
+}

@@ -1,0 +1,30 @@
+@model CategoryProduct
+
+@{
+    ViewData["Title"] = "Nội dung danh mục Sản Phẩm";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>@Model.Title</h1>
+
+<div>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            Nội dung
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.Raw(Model.Description)
+        </dd>
+        <dt class = "col-sm-2">
+            Url
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Slug)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a class = "btn btn-primary" asp-action="Edit" asp-route-id="@Model?.Id">Chỉnh sửa</a> |
+    <a class="btn btn-primary" asp-action="Index">Danh sách chuyên mục</a>
+</div>
