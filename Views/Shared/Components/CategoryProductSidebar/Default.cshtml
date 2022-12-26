@@ -1,0 +1,45 @@
+﻿@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using ASP_MVC.Views.Shared.Components.CategoryProductSidebar
+@model ASP_MVC.Views.Shared.Components.CategoryProductSidebar.CategoryProductSidebar.CategoryProductSidebarData;
+@{
+    var level = Model.Level;
+}
+
+
+@if (Model.Categories?.Count > 0)
+{
+    @if (level == 0)
+    {
+        @Html.Raw("<div class=\"category-sidebar\">")
+        <h4>
+            <a asp-controller="ViewProduct" asp-action="Index" asp-route-categorySlug="">
+                Danh mục sản phẩm
+            </a>
+        </h4>
+    }
+    <ul class="">
+        @foreach (var category in Model.Categories)
+        {
+            var cssActive = category.Slug == Model.CategorySlug ? "active" : "";
+            <li class="">
+                <a class="@cssActive" asp-controller="ViewProduct" asp-action="Index" asp-route-categorySlug="@category.Slug">
+                    @category.Title
+                </a>
+                @if (category.CategoryChildren?.Count > 0)
+                {
+                    @await Component.InvokeAsync("CategoryProductSidebar",
+                               new CategoryProductSidebar.CategoryProductSidebarData()
+                               {
+                                   Categories = category.CategoryChildren.ToList(),
+                                   Level = level + 1,
+                                   CategorySlug = ViewBag.categorySlug
+                               })
+                }
+            </li>
+        }
+    </ul>
+    @if (level == 0)
+    {
+        @Html.Raw("</div>")
+    }
+}

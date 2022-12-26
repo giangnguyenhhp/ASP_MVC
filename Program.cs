@@ -1,3 +1,4 @@
+using ASP_MVC.Areas.Product.Service;
 using ASP_MVC.Data;
 using ASP_MVC.ExtendMethods;
 using ASP_MVC.Models;
@@ -12,7 +13,7 @@ using Microsoft.Extensions.FileProviders;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
 // Add service Razor Pages
 builder.Services.AddRazorPages();
@@ -34,6 +35,7 @@ builder.Services.Configure<RazorViewEngineOptions>(option =>
 // builder.Services.AddSingleton(typeof(ProductService), typeof(ProductService));
 builder.Services.AddSingleton<PlanetService>();
 builder.Services.AddSingleton<IdentityErrorDescriber, AppIdentityErrorDescriber>();
+builder.Services.AddTransient<CartService>();
 
 //Add SendEmail Service
 builder.Services.AddOptions();
@@ -133,6 +135,14 @@ builder.Services.AddAuthentication()
     // .AddTwitter()
     // .AddMicrosoftAccount()
     ;
+builder.Logging.ClearProviders().AddConsole();
+
+//Đăng kí dịch vụ lưu cache bộ nhớ và dịch vụ session
+builder.Services.AddDistributedMemoryCache();                       // Đăng ký dịch vụ lưu cache trong bộ nhớ (Session sẽ sử dụng nó)
+builder.Services.AddSession(cfg => {                    // Đăng ký dịch vụ Session
+    cfg.Cookie.Name = "ASP_MVC";                                 // Đặt tên Session - tên này sử dụng ở Browser (Cookie)
+    cfg.IdleTimeout = new TimeSpan(0,30, 0);    // Thời gian tồn tại của Session
+});
 
 //Đăng kí Identity UI : giao diện mặc định hệ thống tự sinh ra
 // builder.Services.AddDefaultIdentity<User>()
@@ -165,6 +175,8 @@ app.UseStaticFiles(new StaticFileOptions() // Tùy biến sử dụng file tĩnh
 app.AddStatusCodePage(); // Tùy biến Response có lỗi từ 400 - 599
 
 app.UseRouting(); // EndpointRoutingMiddleware
+
+app.UseSession(); // Session
 
 app.UseAuthentication(); // Xác định danh tính
 app.UseAuthorization(); // Xác thực quyền truy cập

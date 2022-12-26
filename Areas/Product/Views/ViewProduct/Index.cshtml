@@ -1,0 +1,104 @@
+﻿@using ASP_MVC.Views.Shared.Components.CategoryProductSidebar
+@model List<ProductModel>
+
+@{
+    var categories = ViewBag.categories as List<CategoryProduct>;
+    var category = ViewBag.category as CategoryProduct;
+    ViewData["Title"] = category != null ? category.Title : "Toàn bộ sản phẩm trong các danh mục";
+
+}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <title>@ViewData["Title"]</title>
+</head>
+<body>
+
+<nav style="--bs-breadcrumb-divider: '>'; " aria-label="breadcrumb" class="bg-light">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="~/">Home</a>
+        </li>
+        @if (categories != null)
+        {
+            var list = category?.ListParents();
+            if (list != null)
+            {
+                foreach (var cate in list)
+                {
+                    <li class="breadcrumb-item">
+                        <a asp-action="Index" asp-route-categorySlug="@cate.Slug">
+                            @cate.Title
+                        </a>
+                    </li>
+                }
+            }
+        }
+    </ol>
+</nav>
+
+<h1>@ViewData["Title"]</h1>
+@if (category != null)
+{
+    <p>@category.Description</p>
+}
+else
+{
+    <p>Toàn bộ sản phẩm trong tất cả các danh mục ...</p>
+}
+<hr>
+<div class="d-flex flex-wrap justify-content-between">
+    @foreach (var product in Model)
+    {
+        var src = "../../../../Uploads/Image/Noimage.jpg";
+        if (product.ProductPhotos != null && product.ProductPhotos.Any())
+        {
+            src = $"/Uploads/Products/{product.ProductPhotos?.FirstOrDefault()?.FileName}";
+        }
+        <div class="card mb-2" style="width: 32%;">
+            <img src=@src class="card-img-top" alt="...">
+            <div class="card-body">
+                <h5 class="card-title">
+                    <a asp-controller="ViewProduct" asp-action="Details" asp-route-productSlug="@product.Slug">
+                        @product.Title
+                    </a>
+                </h5>
+                <p class="card-text">
+                    @product.Description
+                </p>
+                <p>Price : <strong>@product.Price</strong></p>
+                <div>
+                    Danh mục :
+                    <strong class="text-danger">
+                        @product.CategoryProducts?.FirstOrDefault()?.Title
+                    </strong>
+                </div>
+                <div>
+                    Tác giả : <strong>@product.Author?.UserName</strong> |
+                    Ngày cập nhật : <i>@product.DateUpdated.ToShortDateString()</i>
+                </div>
+                <div class="card-body">
+                    <a asp-action="AddToCart" asp-route-productId="@product.ProductId" class="btn btn-primary mx-0">Đặt hàng</a>
+                </div>
+            </div>
+        </div>
+    }
+</div>
+
+</body>
+</html>
+
+@section Sidebar
+{
+    @await Component.InvokeAsync("CategoryProductSidebar",
+               new CategoryProductSidebar.CategoryProductSidebarData()
+               {
+                   Categories = categories,
+                   Level = 0,
+                   CategorySlug = ViewBag.categorySlug
+               })
+}
+
+<partial name="_PagingXTL" model="@ViewBag.pagingModel"/>

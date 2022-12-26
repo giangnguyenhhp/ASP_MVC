@@ -55,7 +55,7 @@
 
 @section Sidebar
 {
-    @await Component.InvokeAsync("CategorySidebar",
+    @await Component?.InvokeAsync("CategorySidebar",
                new CategorySidebar.CategorySidebarData()
                {
                    Categories = categories,

@@ -1,0 +1,14 @@
+﻿@using ASP_MVC.Areas.Product.Service
+@inject CartService CartService;
+
+@{
+    var cartItem = CartService.GetCartItems();
+    if (cartItem.Count > 0)
+    {
+        <div class="nav-item">
+            <a asp-route="cart" class="text-warning">
+                Giỏ hàng (@cartItem.Count)
+            </a>
+        </div>
+    }
+}

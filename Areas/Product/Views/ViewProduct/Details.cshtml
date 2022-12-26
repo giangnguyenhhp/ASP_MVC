@@ -1,0 +1,94 @@
+﻿@using ASP_MVC.Views.Shared.Components.CategoryProductSidebar
+@model ProductModel
+@{
+    var categories = ViewBag.categories as List<CategoryProduct>;
+    var category = ViewBag.category as CategoryProduct;
+    var otherProducts = ViewBag.otherProducts as IQueryable<ProductModel>;
+}
+
+<nav style="--bs-breadcrumb-divider: '>';" class="bg-light" aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a href="~/">Home</a>
+        </li>
+        @if (categories != null)
+        {
+            var list = category?.ListParents();
+            if (list != null)
+            {
+                foreach (var cate in list)
+                {
+                    <li class="breadcrumb-item">
+                        <a asp-action="Index" asp-route-categorySlug="@cate.Slug">
+                            @cate.Title
+                        </a>
+                    </li>
+                }
+                <li class="breadcrumb-item">
+                    <a asp-action="Index" asp-route-categorySlug="@category.Slug">
+                        @category.Title
+                    </a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a asp-action="Index" asp-route-categorySlug="@Html.Raw(Model.Slug + ".html")">
+                        @Model.Title
+                    </a>
+                </li>
+            }
+        }
+    </ol>
+</nav>
+
+<div class="detailsPost">
+    <h1>@Model.Title</h1>
+    <div class="descriptionPost">
+        @Model.Description
+    </div>
+    <div>
+        <p>
+            Giá sản phẩm : <strong>@Model.Price</strong>
+        </p>
+        <a asp-action="AddToCart" asp-route-productId="@Model.ProductId" class="btn btn-primary">Đặt hàng</a>
+    </div>
+    <div>
+        <i>Cập nhật : @Model.DateUpdated</i> |
+        Tác giả : <strong>@Model.Author.UserName</strong>
+    </div>
+    <div class="d-flex flex-wrap">
+        @if (Model.ProductPhotos.Any())
+        {
+            foreach (var photo in Model.ProductPhotos)
+            {
+                <img class="w-50" src="/Uploads/Products/@photo.FileName" alt="">
+            }
+        }
+    </div>
+    <hr/>
+    @Html.Raw(Model.Content)
+</div>
+
+
+@section Sidebar
+{
+    @await Component.InvokeAsync("CategoryProductSidebar",
+               new CategoryProductSidebar.CategoryProductSidebarData()
+               {
+                   Categories = categories,
+                   Level = 0,
+                   CategorySlug = category.Slug
+               })
+
+    <ul class="list-group">
+        @if (otherProducts != null)
+        {
+            @foreach (var product in otherProducts)
+            {
+                <li class="list-group-item">
+                    <a asp-controller="ViewProduct" asp-action="Details" asp-route-productSlug="@product.Slug">
+                        @product.Title
+                    </a>
+                </li>
+            }
+        }
+    </ul>
+}

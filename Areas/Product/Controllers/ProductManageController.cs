@@ -108,8 +108,7 @@ namespace ASP_MVC.Areas.Product.Controllers
         // GET: Blog/Post/Create
         public async Task<IActionResult> Create()
         {
-            var categoryProducts = await _context.CategoryProducts.ToListAsync();
-            ViewData["Categories"] = new MultiSelectList(categoryProducts, "Id", "Title");
+            await GetCategoryProducts();
 
             return View();
         }
@@ -123,8 +122,7 @@ namespace ASP_MVC.Areas.Product.Controllers
             [Bind("Title,Description,Slug,Content,Published,CategoryProductIds,Price")]
             CreateProductModel product)
         {
-            var categoryProducts = await _context.CategoryProducts.ToListAsync();
-            ViewData["Categories"] = new MultiSelectList(categoryProducts, "Id", "Title");
+            await GetCategoryProducts();
 
             product.Slug ??= AppUtilities.GenerateSlug(product.Title);
 
@@ -193,8 +191,7 @@ namespace ASP_MVC.Areas.Product.Controllers
                 Price = product.Price
             };
 
-            var categoryProducts = await _context.CategoryProducts.ToListAsync();
-            ViewData["Categories"] = new MultiSelectList(categoryProducts, "Id", "Title");
+            await GetCategoryProducts();
             return View(productEdit);
         }
 
@@ -278,18 +275,15 @@ namespace ASP_MVC.Areas.Product.Controllers
                     {
                         return NotFound();
                     }
-                    else
-                    {
-                        throw;
-                    }
+
+                    throw;
                 }
 
                 StatusMessage = "Vừa cập nhật sản phẩm";
                 return RedirectToAction(nameof(Index));
             }
 
-            var categoryProducts = await _context.CategoryProducts.ToListAsync();
-            ViewData["Categories"] = new MultiSelectList(categoryProducts, "Id", "Title");
+            await GetCategoryProducts();
             return View(product);
         }
 
@@ -339,6 +333,12 @@ namespace ASP_MVC.Areas.Product.Controllers
             return (_context.Products?.Any(e => e.ProductId == id)).GetValueOrDefault();
         }
 
+        private async Task<List<CategoryProduct>> GetCategoryProducts()
+        {
+            var categoryProducts = await _context.CategoryProducts.ToListAsync();
+            ViewData["Categories"] = new MultiSelectList(categoryProducts, "Id", "Title");
+            return categoryProducts;
+        }
 
         public class UploadOneFile
         {

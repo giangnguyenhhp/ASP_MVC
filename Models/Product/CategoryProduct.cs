@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using ASP_MVC.Models.Blog;
 
 namespace ASP_MVC.Models.Product;
 

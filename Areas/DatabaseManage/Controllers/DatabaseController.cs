@@ -96,8 +96,10 @@ namespace ASP_MVC.Areas.DatabaseManage.Controllers
             //Faker Category
             _dbContext.CategoryProducts.RemoveRange(_dbContext.CategoryProducts
                 .Where(x => x.Description.Contains("[FakeData]")));
-            _dbContext.Products.RemoveRange(_dbContext.Products
-                .Where(x => x.Content.Contains("[FakeData]")));
+            _dbContext.Products
+                .RemoveRange(_dbContext.Products
+                    .Include(p => p.ProductPhotos)
+                    .Where(x => x.Content.Contains("[FakeData]")));
             _dbContext.SaveChanges();
 
             var fakerCategory = new Faker<CategoryProduct>();
@@ -139,7 +141,7 @@ namespace ASP_MVC.Areas.DatabaseManage.Controllers
             fakerProduct.RuleFor(x => x.Title, fk => $"Sản phẩm {bv++} : " + fk.Commerce.ProductName());
             fakerProduct.RuleFor(x => x.DateCreated,
                 fk => fk.Date.Between(new DateTime(2022, 1, 1), new DateTime(2022, 12, 18)));
-            fakerProduct.RuleFor(x => x.Price, fk => int.Parse(fk.Commerce.Price(500, 2000)));
+            fakerProduct.RuleFor(x => x.Price, fk => int.Parse(fk.Commerce.Price(500, 2000,0)));
 
 
             var products = new List<ProductModel>();
