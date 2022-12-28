@@ -1,4 +1,7 @@
 @model ASP_MVC.Areas.Identity.Models.User.AddUserClaimModel
+
+@using ASP_MVC.Areas.AdminCP.Menu
+@inject AdminSideBarService AdminSideBarService
 @{
     ViewData["Title"] = "Claim của user";
 }
@@ -45,4 +48,8 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+@section Sidebar
+{
+    @Html.Raw(AdminSideBarService.RenderHtml())
 }

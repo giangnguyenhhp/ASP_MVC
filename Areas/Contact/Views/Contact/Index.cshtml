@@ -1,8 +1,9 @@
+@using ASP_MVC.Areas.AdminCP.Menu
 @model IEnumerable<ASP_MVC.Models.Contacts.Contact>
-
+@inject AdminSideBarService AdminSideBarService
 @{
     ViewData["Title"] = "Index";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "_AdminLayout";
 }
 
 <h1>Index</h1>
@@ -42,10 +43,17 @@
                 @Html.DisplayFor(modelItem => item.Phone)
             </td>
             <td>
-                <a asp-action="Details" asp-route-id="@item.Id">Xem</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Xóa</a>
+                <a class="btn btn-primary" asp-action="Details" asp-route-id="@item.Id">Xem</a> |
+                <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Xóa</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
+@{
+    AdminSideBarService.SetActive("Contact","Contact","Index");
+}
+@section Sidebar
+{
+    @Html.Raw(AdminSideBarService.RenderHtml())
+}

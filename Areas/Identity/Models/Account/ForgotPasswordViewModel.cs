@@ -9,6 +9,7 @@ namespace ASP_MVC.Areas.Identity.Models.Account
     {
         [Required]
         [EmailAddress]
+        [Display(Name = "Email",Prompt = "Điền địa chỉ Email")]
         public string Email { get; set; }
     }
 }

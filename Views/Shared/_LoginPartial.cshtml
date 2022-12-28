@@ -1,17 +1,34 @@
 ﻿@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Authorization
 
 @inject SignInManager<AppUser> SignInManager
 @inject UserManager<AppUser> UserManager
 
+@inject IAuthorizationService AuthorizationService;
+@{
+    var result = await AuthorizationService.AuthorizeAsync(User, "ShowAdminMenu");
+}
 @if (SignInManager.IsSignedIn(User))
 {
     <form asp-area="Identity" asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm" class="navbar-right">
         <ul class="nav navbar-nav navbar-right">
             <li class="nav-item">
-                <a class="nav-link" asp-area="Identity"  asp-controller="Manage" asp-action="Index" title="Manage">Xin chào @UserManager.GetUserName(User)!</a>
+                <a class="nav-link" asp-area="Identity" asp-controller="Manage" asp-action="Index" title="Manage">
+                    <i class="fas fa-users"></i> @UserManager.GetUserName(User)!
+                </a>
             </li>
+            @if (result.Succeeded)
+            {
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="AdminCP" asp-controller="AdminControlPanel" asp-action="Index" title="Quản trị">
+                        <i class="fas fa-cog"></i> Quản trị
+                    </a>
+                </li>
+            }
             <li class="nav-item">
-                <button type="submit" class="btn btn-link navbar-btn navbar-link">Đăng xuất</button>
+                <button type="submit" class="btn btn-link navbar-btn navbar-link">
+                    <i class="fas fa-sign-out-alt">Đăng xuất</i>
+                </button>
             </li>
         </ul>
     </form>
@@ -20,10 +37,9 @@ else
 {
     <ul class="nav navbar-nav navbar-right">
         <li class="nav-item">
-            <a class="nav-link" asp-area="Identity" asp-controller="Account" asp-action="Register">Đăng ký</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" asp-area="Identity" asp-controller="Account" asp-action="Login">Đăng nhập</a>
+            <a class="nav-link" asp-area="Identity" asp-controller="Account" asp-action="Login">
+                <i class="fas fa-sign-in-alt"> Đăng nhập</i>
+            </a>
         </li>
     </ul>
 }

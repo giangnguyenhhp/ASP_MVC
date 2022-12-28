@@ -9,7 +9,7 @@ namespace ASP_MVC.Areas.Identity.Models.Account
     {
         [Required(ErrorMessage = "Phải nhập {0}")]
         [EmailAddress(ErrorMessage = "Sai định dạng Email")]
-        [Display(Name = "Email")]
+        [Display(Name = "Email",Prompt = "Email đăng nhập")]
         public string Email { get; set; }
 
 
@@ -26,7 +26,7 @@ namespace ASP_MVC.Areas.Identity.Models.Account
 
 
         [DataType(DataType.Text)]
-        [Display(Name = "Tên tài khoản")]
+        [Display(Name = "Tên tài khoản",Prompt = "Tên đăng nhập")]
         [Required(ErrorMessage = "Phải nhập {0}")]
         [StringLength(100, ErrorMessage = "{0} phải dài từ {2} đến {1} ký tự.", MinimumLength = 3)]
         public string UserName { get; set; }

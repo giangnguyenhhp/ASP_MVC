@@ -1,8 +1,9 @@
 @model ASP_MVC.Models.Contacts.Contact
-
+@using ASP_MVC.Areas.AdminCP.Menu
+@inject AdminSideBarService AdminSideBarService
 @{
     ViewData["Title"] = "Details";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "_AdminLayout";
 }
 
 <h1>Thông tin liên hệ</h1>
@@ -42,5 +43,12 @@
     </dl>
 </div>
 <div>
-    <a asp-action="Index">Danh sách liên hệ</a>
+    <a class="btn btn-primary" asp-action="Index">Danh sách liên hệ</a>
 </div>
+@{
+    AdminSideBarService.SetActive("DatabaseManage","Database","Index");
+}
+@section Sidebar
+{
+    @Html.Raw(AdminSideBarService.RenderHtml())
+}

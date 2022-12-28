@@ -3,6 +3,7 @@ using ASP_MVC.Models;
 using ASP_MVC.Models.Blog;
 using ASP_MVC.Models.Product;
 using Bogus;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ namespace ASP_MVC.Areas.DatabaseManage.Controllers
 {
     [Area("DatabaseManage")]
     [Route("database-manage/[action]")]
+    [Authorize(Roles = RoleName.Administrator)]
     public class DatabaseController : Controller
     {
         private readonly MasterDbContext _dbContext;

@@ -1,8 +1,9 @@
 @model ASP_MVC.Models.Blog.Category
-
+@using ASP_MVC.Areas.AdminCP.Menu
+@inject AdminSideBarService AdminSideBarService
 @{
     ViewData["Title"] = "Tạo danh mục blog";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "_AdminLayout";
 
     // IEnumerable<SelectListItem> items = null;
     var item1 = new List<SelectListItem>();
@@ -31,7 +32,7 @@
             giatri = 3
         }
     };
-    var item2 = new SelectList(data,"giatri","ten",2);
+    var item2 = new SelectList(data, "giatri", "ten", 2);
 }
 
 @* <select asp-items="item1"></select> *@
@@ -67,19 +68,29 @@
             </div>
             <div class="form-group">
                 <input type="submit" value="Tạo" class="btn btn-primary my-2"/>
+                <div>
+                    <a class="btn btn-primary" asp-action="Index">Danh sách chuyên mục</a>
+                </div>
             </div>
         </form>
     </div>
+
 </div>
 
-<div>
-    <a class="btn btn-primary" asp-action="Index">Danh sách chuyên mục</a>
-</div>
 
 @section Scripts {
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }
+
 @{
     var summernote = new SummerNote("Description");
 }
-<partial name="_Summernote" model="summernote" />
+<partial name="_Summernote" model="summernote"/>
+@{
+    AdminSideBarService.SetActive("Blog", "Category", "Create");
+}
+
+@section Sidebar
+{
+    @Html.Raw(AdminSideBarService.RenderHtml())
+}

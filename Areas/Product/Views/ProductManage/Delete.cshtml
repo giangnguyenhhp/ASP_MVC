@@ -1,8 +1,8 @@
 @model ProductModel
-
+@using ASP_MVC.Areas.AdminCP.Menu
+@inject AdminSideBarService AdminSideBarService
 @{
     ViewData["Title"] = "Xóa sản phẩm";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -25,3 +25,7 @@
         <a class="btn btn-primary" asp-action="Index">Danh sách sản phẩm</a>
     </form>
 </div>
+@section Sidebar
+{
+    @Html.Raw(AdminSideBarService.RenderHtml())
+}

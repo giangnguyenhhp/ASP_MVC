@@ -1,4 +1,6 @@
 ﻿@model ASP_MVC.Areas.Identity.Models.Manage.DisplayRecoveryCodesViewModel
+@using ASP_MVC.Areas.AdminCP.Menu
+@inject AdminSideBarService AdminSideBarService
 @{
     ViewData["Title"] = "Mã phục hồi";
 }
@@ -14,9 +16,9 @@
         <dt>Codes:</dt>
         @foreach (var code in Model.Codes)
         {
-        <dd>
-            <text>@code</text>
-        </dd>
+            <dd>
+                <text>@code</text>
+            </dd>
         }
     </dl>
 </div>

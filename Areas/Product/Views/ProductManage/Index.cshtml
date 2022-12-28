@@ -1,8 +1,9 @@
 @model IEnumerable<ProductModel>
-
+@using ASP_MVC.Areas.AdminCP.Menu
+@inject AdminSideBarService AdminSideBarService
 @{
     ViewData["Title"] = "Danh sách sản phẩm";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -74,3 +75,11 @@
 </table>
 
 <partial name="_PagingXTL" model="@ViewBag.pagingModel"/>
+@{
+    AdminSideBarService.SetActive("Product", "ProductManage", "Index");
+}
+
+@section Sidebar
+{
+    @Html.Raw(AdminSideBarService.RenderHtml())
+}

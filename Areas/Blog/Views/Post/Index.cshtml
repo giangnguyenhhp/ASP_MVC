@@ -1,8 +1,9 @@
+@using ASP_MVC.Areas.AdminCP.Menu
 @model IEnumerable<ASP_MVC.Models.Blog.Post>
-
+@inject AdminSideBarService AdminSideBarService
 @{
-    ViewData["Title"] = "Danh sách Blog";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Danh sách bài viết";
+    Layout = "_AdminLayout";
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -68,3 +69,12 @@
 </table>
 
 <partial name="_PagingXTL" model="@ViewBag.pagingModel"/>
+
+@{
+    AdminSideBarService.SetActive("Blog","Post","Index");
+}
+
+@section Sidebar
+{
+    @Html.Raw(AdminSideBarService.RenderHtml())
+}

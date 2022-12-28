@@ -1,6 +1,7 @@
 // Licensed to the .NET Foundation under one or more agreements.
 // The .NET Foundation licenses this file to you under the MIT license.
 
+using System.Collections.Immutable;
 using System.Security.Claims;
 using System.Text;
 using System.Text.Encodings.Web;
@@ -13,7 +14,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Razor.Language;
 using Microsoft.AspNetCore.WebUtilities;
+using Microsoft.VisualBasic;
 
 namespace ASP_MVC.Areas.Identity.Controllers
 {
@@ -504,8 +507,11 @@ namespace ASP_MVC.Areas.Identity.Controllers
             }
 
             var userFactors = await _userManager.GetValidTwoFactorProvidersAsync(user);
-            var factorOptions = userFactors.Select(purpose => new SelectListItem { Text = purpose, Value = purpose })
-                .ToList();
+            ICollection<SelectListItem> factorOptions = userFactors
+                    .Select(purpose => new SelectListItem { Text = purpose, Value = purpose})
+                    .ToList()    
+                    ;
+
             return View(new SendCodeViewModel
                 { Providers = factorOptions, ReturnUrl = returnUrl, RememberMe = rememberMe });
         }
@@ -517,12 +523,15 @@ namespace ASP_MVC.Areas.Identity.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SendCode(SendCodeViewModel model)
         {
-            
+            var error = ModelState.Where(x => x.Value.Errors.Count > 0)
+                .Select(x => new { x.Key, x.Value.Errors })
+                .ToArray();
+
             if (!ModelState.IsValid)
             {
                 return View();
             }
- 
+
 
             var user = await _signInManager.GetTwoFactorAuthenticationUserAsync();
             if (user == null)
@@ -530,7 +539,7 @@ namespace ASP_MVC.Areas.Identity.Controllers
                 return View("Error");
             }
 
-            
+
             // Dùng mã Authenticator
             if (model.SelectedProvider == "Authenticator")
             {
@@ -583,6 +592,10 @@ namespace ASP_MVC.Areas.Identity.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> VerifyCode(VerifyCodeViewModel model)
         {
+            var error = ModelState.Where(x => x.Value.Errors.Count > 0)
+                .Select(x => new { x.Key, x.Value.Errors })
+                .ToArray();
+            
             model.ReturnUrl ??= Url.Content("~/");
             if (!ModelState.IsValid)
             {

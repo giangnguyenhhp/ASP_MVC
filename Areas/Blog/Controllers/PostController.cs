@@ -1,15 +1,18 @@
 using ASP_MVC.Areas.Blog.Models;
+using ASP_MVC.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using ASP_MVC.Models;
 using ASP_MVC.Utilities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 
 namespace ASP_MVC.Areas.Blog.Controllers
 {
     [Area("Blog")]
     [Route("admin/blog/post/[action]/{id?}")]
+    [Authorize(Roles = RoleName.Administrator)]
     public class PostController : Controller
     {
         private readonly MasterDbContext _context;

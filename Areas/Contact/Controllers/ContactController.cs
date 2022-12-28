@@ -1,3 +1,4 @@
+using ASP_MVC.Data;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using ASP_MVC.Models;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Authorization;
 namespace ASP_MVC.Areas.Contact.Controllers
 {
     [Area("Contact")]
+    [Authorize(Roles = RoleName.Administrator)]
     public class ContactController : Controller
     {
         private readonly MasterDbContext _context;

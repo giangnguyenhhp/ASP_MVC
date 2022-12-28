@@ -1,4 +1,6 @@
 ﻿@model ASP_MVC.Areas.Identity.Models.Manage.VerifyPhoneNumberViewModel
+@using ASP_MVC.Areas.AdminCP.Menu
+@inject AdminSideBarService AdminSideBarService
 @{
     ViewData["Title"] = "Xác nhận số điện thoại";
 }
@@ -28,3 +30,4 @@
 @section Scripts {
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }
+

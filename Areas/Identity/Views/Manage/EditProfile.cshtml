@@ -1,4 +1,6 @@
 @model ASP_MVC.Areas.Identity.Models.Manage.EditExtraProfileModel
+@using ASP_MVC.Areas.AdminCP.Menu
+@inject AdminSideBarService AdminSideBarService
 @{
     ViewData["Title"] = "Hồ sơ cá nhân";
 }
@@ -36,6 +38,7 @@
             </div>            
 
             <button id="update-profile-button" type="submit" class="btn btn-primary">Lưu dữ liệu</button>
+            <a class="btn btn-primary" asp-action="Index">Quay lại</a>
         </form>
     </div>
 </div>

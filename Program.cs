@@ -1,10 +1,13 @@
+using ASP_MVC.Areas.AdminCP.Menu;
 using ASP_MVC.Areas.Product.Service;
 using ASP_MVC.Data;
 using ASP_MVC.ExtendMethods;
 using ASP_MVC.Models;
 using ASP_MVC.Services;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 using Microsoft.AspNetCore.Mvc.Razor;
+using Microsoft.AspNetCore.Mvc.Routing;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 
@@ -36,6 +39,8 @@ builder.Services.Configure<RazorViewEngineOptions>(option =>
 builder.Services.AddSingleton<PlanetService>();
 builder.Services.AddSingleton<IdentityErrorDescriber, AppIdentityErrorDescriber>();
 builder.Services.AddTransient<CartService>();
+builder.Services.AddTransient<AdminSideBarService>();
+builder.Services.AddTransient<IActionContextAccessor,ActionContextAccessor>();
 
 //Add SendEmail Service
 builder.Services.AddOptions();

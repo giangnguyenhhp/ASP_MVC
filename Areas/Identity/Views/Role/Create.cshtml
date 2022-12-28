@@ -1,6 +1,10 @@
 @model ASP_MVC.Areas.Identity.Models.Role.CreateRoleModel
+@using ASP_MVC.Areas.AdminCP.Menu
+@inject AdminSideBarService AdminSideBarService
 @{
     ViewData["Title"] = "Tạo role mới";
+    Layout = "_AdminLayout";
+
 }
 <h2>@ViewData["Title"]</h2>
 <partial name="_StatusMessage"></partial>
@@ -17,7 +21,7 @@
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
 
-            <div class="form-group">
+            <div class="form-group mt-2">
                 <input type="submit" value="Tạo mới" class="btn btn-primary" />
                 <a class="btn btn-primary" asp-action="Index">Danh sách các role</a>
             </div>
@@ -25,6 +29,14 @@
     </div>
 </div>
 
+@{
+    AdminSideBarService.SetActive("Identity", "Role", "Create");
+}
+
+@section Sidebar
+{
+    @Html.Raw(AdminSideBarService.RenderHtml())
+}
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

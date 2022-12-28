@@ -105,7 +105,7 @@ namespace ASP_MVC.Areas.Product.Controllers
             return View(product);
         }
 
-        // GET: Blog/Post/Create
+        // GET: 
         public async Task<IActionResult> Create()
         {
             await GetCategoryProducts();

@@ -1,8 +1,10 @@
 @model ASP_MVC.Models.Blog.Category
-
+@using ASP_MVC.Areas.AdminCP.Menu
+@inject AdminSideBarService AdminSideBarService
 @{
     ViewData["Title"] = "Nội dung danh mục Blog";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "_AdminLayout";
+
 }
 
 <h1>@Model.Title</h1>
@@ -28,3 +30,8 @@
     <a class = "btn btn-primary" asp-action="Edit" asp-route-id="@Model?.Id">Chỉnh sửa</a> |
     <a class="btn btn-primary" asp-action="Index">Danh sách chuyên mục</a>
 </div>
+
+@section Sidebar
+{
+    @Html.Raw(AdminSideBarService.RenderHtml())
+}

@@ -1,8 +1,10 @@
 @model ASP_MVC.Areas.Blog.Models.CreatePostModel
-
+@using ASP_MVC.Areas.AdminCP.Menu
+@inject AdminSideBarService AdminSideBarService
 @{
     ViewData["Title"] = "Chỉnh sửa bài viết";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "_AdminLayout";
+
     var list = ViewData["Categories"] as MultiSelectList;
 }
 
@@ -78,3 +80,7 @@
     
 }
 <partial name="_Summernote" model="summernote" />
+@section Sidebar
+{
+    @Html.Raw(AdminSideBarService.RenderHtml())
+}

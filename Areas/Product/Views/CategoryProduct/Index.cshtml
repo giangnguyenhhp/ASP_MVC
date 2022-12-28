@@ -1,8 +1,9 @@
 @model IEnumerable<CategoryProduct>
-
+@using ASP_MVC.Areas.AdminCP.Menu
+@inject AdminSideBarService AdminSideBarService
 @{
     ViewData["Title"] = "Danh mục Sản Phẩm";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+
 }
 
 <h1>@ViewData["Title"]</h1>
@@ -56,4 +57,12 @@
            }
        }
     }
+}
+@{
+    AdminSideBarService.SetActive("Product", "CategoryProduct", "Index");
+}
+
+@section Sidebar
+{
+    @Html.Raw(AdminSideBarService.RenderHtml())
 }

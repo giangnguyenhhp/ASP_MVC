@@ -1,13 +1,16 @@
 ﻿@using ASP_MVC.Areas.Product.Service
+@using Microsoft.AspNetCore.Identity
+@using Microsoft.AspNetCore.Mvc.TagHelpers
 @inject CartService CartService;
-
+@inject SignInManager<AppUser> SignInManager
+@inject UserManager<AppUser> UserManager
 @{
     var cartItem = CartService.GetCartItems();
     if (cartItem.Count > 0)
     {
         <div class="nav-item">
             <a asp-route="cart" class="text-warning">
-                Giỏ hàng (@cartItem.Count)
+                <i class="fas fa-cart-plus"></i> (@cartItem.Count)
             </a>
         </div>
     }

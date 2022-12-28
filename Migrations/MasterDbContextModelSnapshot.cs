@@ -125,7 +125,7 @@ namespace ASPMVC.Migrations
                     b.HasIndex("Slug")
                         .IsUnique();
 
-                    b.ToTable("Category");
+                    b.ToTable("Category", (string)null);
                 });
 
             modelBuilder.Entity("ASP_MVC.Models.Blog.Post", b =>
@@ -172,7 +172,7 @@ namespace ASPMVC.Migrations
                     b.HasIndex("Slug")
                         .IsUnique();
 
-                    b.ToTable("Posts");
+                    b.ToTable("Posts", (string)null);
                 });
 
             modelBuilder.Entity("ASP_MVC.Models.Contacts.Contact", b =>
@@ -206,7 +206,7 @@ namespace ASPMVC.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Contacts");
+                    b.ToTable("Contacts", (string)null);
                 });
 
             modelBuilder.Entity("ASP_MVC.Models.Product.CategoryProduct", b =>
@@ -241,7 +241,7 @@ namespace ASPMVC.Migrations
                     b.HasIndex("Slug")
                         .IsUnique();
 
-                    b.ToTable("CategoryProduct");
+                    b.ToTable("CategoryProduct", (string)null);
                 });
 
             modelBuilder.Entity("ASP_MVC.Models.Product.ProductModel", b =>
@@ -291,7 +291,7 @@ namespace ASPMVC.Migrations
                     b.HasIndex("Slug")
                         .IsUnique();
 
-                    b.ToTable("Product");
+                    b.ToTable("Product", (string)null);
                 });
 
             modelBuilder.Entity("ASP_MVC.Models.Product.ProductPhoto", b =>
@@ -313,7 +313,7 @@ namespace ASPMVC.Migrations
 
                     b.HasIndex("ProductId");
 
-                    b.ToTable("ProductPhotos");
+                    b.ToTable("ProductPhotos", (string)null);
                 });
 
             modelBuilder.Entity("CategoryPost", b =>
@@ -328,7 +328,7 @@ namespace ASPMVC.Migrations
 
                     b.HasIndex("PostsPostId");
 
-                    b.ToTable("CategoryPost");
+                    b.ToTable("CategoryPost", (string)null);
                 });
 
             modelBuilder.Entity("CategoryProductProductModel", b =>
@@ -343,7 +343,7 @@ namespace ASPMVC.Migrations
 
                     b.HasIndex("ProductsProductId");
 
-                    b.ToTable("CategoryProductProductModel");
+                    b.ToTable("CategoryProductProductModel", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>

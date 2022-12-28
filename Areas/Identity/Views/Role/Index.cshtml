@@ -1,6 +1,9 @@
 @model List<ASP_MVC.Areas.Identity.Models.Role.RoleModel>
+@using ASP_MVC.Areas.AdminCP.Menu
+@inject AdminSideBarService AdminSideBarService
 @{
     ViewData["Title"] = "Danh sách các role (vai trò)";
+    Layout = "_AdminLayout";
 }
 <h2>@ViewData["Title"]</h2>
 
@@ -34,3 +37,11 @@
         </tr>
     }
 </table>
+@{
+    AdminSideBarService.SetActive("Identity", "Role", "Index");
+}
+
+@section Sidebar
+{
+    @Html.Raw(AdminSideBarService.RenderHtml())
+}

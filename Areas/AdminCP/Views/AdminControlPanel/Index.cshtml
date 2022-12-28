@@ -1,0 +1,13 @@
+﻿@using ASP_MVC.Areas.AdminCP.Menu
+@inject AdminSideBarService AdminSideBarService
+@{
+    ViewData["Title"]="Admin Control Panel";
+    Layout = "_AdminLayout";
+}
+
+<h1>Admin Control Panel</h1>
+
+@section Sidebar
+{
+    @Html.Raw(AdminSideBarService.RenderHtml())
+}

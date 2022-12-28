@@ -1,5 +1,6 @@
 @model ASP_MVC.Areas.Identity.Models.Role.EditRoleModel
- 
+ @using ASP_MVC.Areas.AdminCP.Menu
+ @inject AdminSideBarService AdminSideBarService
 @{
     ViewData["Title"] = "Cập nhật role";
 }
@@ -48,4 +49,8 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+@section Sidebar
+{
+    @Html.Raw(AdminSideBarService.RenderHtml())
 }

@@ -1,7 +1,9 @@
-﻿@model dynamic
-
+﻿@using ASP_MVC.Areas.AdminCP.Menu
+@model dynamic
+@inject AdminSideBarService AdminSideBarService
 @{
     ViewBag.Title = "Xóa Database";
+    Layout = "_AdminLayout";
 }
 
 <h1>@ViewBag.Title</h1>
@@ -13,3 +15,11 @@
     <hr/>
     <a class="btn btn-primary" asp-action="Index">Database Manage</a>
 </form>
+
+@{
+    AdminSideBarService.SetActive("DatabaseManage","Database","Index");
+}
+@section Sidebar
+{
+    @Html.Raw(AdminSideBarService.RenderHtml())
+}

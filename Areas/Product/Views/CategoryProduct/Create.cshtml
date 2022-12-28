@@ -1,8 +1,10 @@
 @model CategoryProduct
-
+@using ASP_MVC.Areas.AdminCP.Menu
+@inject AdminSideBarService AdminSideBarService
 @{
-    ViewData["Title"] = "Tạo danh mục blog";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Tạo danh mục sản phẩm";
+    Layout = "_AdminLayout";
+
 
     // IEnumerable<SelectListItem> items = null;
     var item1 = new List<SelectListItem>();
@@ -83,3 +85,11 @@
     var summernote = new SummerNote("Description");
 }
 <partial name="_Summernote" model="summernote" />
+@{
+    AdminSideBarService.SetActive("Product", "CategoryProduct", "Create");
+}
+
+@section Sidebar
+{
+    @Html.Raw(AdminSideBarService.RenderHtml())
+}

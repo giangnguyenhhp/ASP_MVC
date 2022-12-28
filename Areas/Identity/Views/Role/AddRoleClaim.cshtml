@@ -1,6 +1,9 @@
 @model ASP_MVC.Areas.Identity.Models.Role.EditClaimModel
+@using ASP_MVC.Areas.AdminCP.Menu
+@inject AdminSideBarService AdminSideBarService
 @{
     ViewData["Title"] = "Gán đặc tính cho role";
+    Layout = "_AdminLayout";
 }
 <h2>@ViewData["Title"]: @Model.role.Name</h2>
 <partial name="_StatusMessage"></partial>
@@ -33,4 +36,8 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
+@section Sidebar
+{
+    @Html.Raw(AdminSideBarService.RenderHtml())
 }

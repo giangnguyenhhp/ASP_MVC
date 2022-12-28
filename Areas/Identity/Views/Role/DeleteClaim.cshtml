@@ -1,8 +1,12 @@
 ﻿@model ASP_MVC.Areas.Identity.Models.Role.EditClaimModel
-
+@using ASP_MVC.Areas.AdminCP.Menu
+@inject AdminSideBarService AdminSideBarService
 @{
     ViewBag.Title = "title";
-    Layout = "_Layout";
 }
 
 <h2>title</h2>
+@section Sidebar
+{
+    @Html.Raw(AdminSideBarService.RenderHtml())
+}

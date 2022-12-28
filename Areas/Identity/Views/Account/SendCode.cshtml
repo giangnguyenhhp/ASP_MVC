@@ -5,17 +5,19 @@
 
 <h1>@ViewData["Title"].</h1>
 
-<form asp-controller="Account" asp-action="SendCode" asp-route-returnUrl="@Model.ReturnUrl" method="post" class="form-horizontal" role="form">
-    <input asp-for="RememberMe" type="hidden" />
-    <div class="row">
-        <div class="col-md-8">
-            Mã xác thực gửi tới:
-            <select asp-for="SelectedProvider" asp-items="Model.Providers"></select>
-            <button type="submit" class="btn btn-success btn-sm">Gửi</button>
+    <form asp-controller="Account" asp-action="SendCode" asp-route-returnUrl="@Model?.ReturnUrl" method="post" class="form-horizontal" role="form">
+        <input asp-for="RememberMe" type="hidden"/>
+        <div class="row">
+            <div class="col-md-8">
+                Mã xác thực gửi tới:
+                <select  asp-for="SelectedProvider" asp-items="@Model?.Providers" ></select>
+                <button type="submit" class="btn btn-success btn-sm">Gửi</button>
+            </div>
         </div>
-    </div>
-</form>
+    </form>
+
+
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }

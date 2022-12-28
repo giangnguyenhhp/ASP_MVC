@@ -12,6 +12,7 @@
     </ItemGroup>
 
     <ItemGroup>
+        <Folder Include="Areas\AdminCP\Views" />
         <Folder Include="Areas\Blog\Controllers" />
         <Folder Include="Areas\Blog\Data" />
         <Folder Include="Areas\Contact\Controllers" />

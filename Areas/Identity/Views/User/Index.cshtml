@@ -1,7 +1,11 @@
 @using ASP_MVC.Models
 @model ASP_MVC.Areas.Identity.Models.User.UserListModel
+@using ASP_MVC.Areas.AdminCP.Menu
+@inject AdminSideBarService AdminSideBarService
 @{
     ViewData["Title"] = "Danh sách các thành viên";
+    Layout = "_AdminLayout";
+
 }
 <h2>@ViewData["Title"]</h2>
 <partial name="_StatusMessage"></partial>
@@ -43,3 +47,11 @@
 }
 
 <partial name="_PagingXTL" model="@pagingmodel" />
+@{
+    AdminSideBarService.SetActive("Identity", "User", "Index");
+}
+
+@section Sidebar
+{
+    @Html.Raw(AdminSideBarService.RenderHtml())
+}

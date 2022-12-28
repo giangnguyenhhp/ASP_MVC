@@ -1,4 +1,7 @@
 @model ASP_MVC.Areas.Identity.Models.User.AddUserRoleModel
+
+@using ASP_MVC.Areas.AdminCP.Menu
+@inject AdminSideBarService AdminSideBarService
 @{
     ViewData["Title"] = "Gán role";
 }
@@ -71,4 +74,8 @@
     </script>
 
     <partial name="_ValidationScriptsPartial" />
+}
+@section Sidebar
+{
+    @Html.Raw(AdminSideBarService.RenderHtml())
 }

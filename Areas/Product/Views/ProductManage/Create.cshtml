@@ -1,8 +1,9 @@
 @model ASP_MVC.Areas.Product.Models.CreateProductModel
-
+@using ASP_MVC.Areas.AdminCP.Menu
+@inject AdminSideBarService AdminSideBarService
 @{
     ViewData["Title"] = "Tạo sản phẩm mới";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+
     var list = ViewData["Categories"] as MultiSelectList;
 }
 
@@ -80,3 +81,11 @@
 
 }
 <partial name="_Summernote" model="summernote"/>
+@{
+    AdminSideBarService.SetActive("Product", "ProductManage", "Create");
+}
+
+@section Sidebar
+{
+    @Html.Raw(AdminSideBarService.RenderHtml())
+}
